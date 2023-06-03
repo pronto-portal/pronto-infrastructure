@@ -10,3 +10,5 @@ terraform {
 provider "aws" {
     region="us-east-1"
 }
+
+// todo: remote s3 bucket for tf-state
