@@ -1,4 +1,5 @@
-resource "aws_iam_role" "create_eventbridge_events" {
+resource "aws_iam_role" "write_eventbridge_events" {
+    name = "write_eventbridge_events"
     assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -15,7 +16,7 @@ resource "aws_iam_role" "create_eventbridge_events" {
     
 
     inline_policy {
-        name = "create_eventbridge_events_policy"
+        name = "write_eventbridge_events_policy"
 
         policy = jsonencode({
         Version = "2012-10-17"
@@ -36,7 +37,8 @@ resource "aws_iam_role" "create_eventbridge_events" {
     }
 }
 
-resource "aws_iam_role" "get_eventbridge_events" {
+resource "aws_iam_role" "read_eventbridge_events" {
+    name = "read_eventbridge_events"
     assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -53,7 +55,7 @@ resource "aws_iam_role" "get_eventbridge_events" {
     
 
     inline_policy {
-      name = "get_eventbridge_events_policy"
+      name = "read_eventbridge_events_policy"
 
         policy = jsonencode({
         Version = "2012-10-17"
