@@ -7,3 +7,7 @@ resource "aws_vpc" "pronto" {
     App = "pronto"
   }
 }
+
+output "pronto_vpc_id" {
+  value = aws_vpc.pronto.id
+}

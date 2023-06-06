@@ -41,3 +41,11 @@ resource "aws_subnet" "pronto_public_az_b" {
     App = "pronto"
   }
 }
+
+output pronto_private_az_a {
+  value       = aws_subnet.pronto_private_az_a.id
+}
+
+output pronto_private_az_b {
+  value       = aws_subnet.pronto_private_az_b.id
+}

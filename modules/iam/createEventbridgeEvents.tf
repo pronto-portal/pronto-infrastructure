@@ -75,3 +75,11 @@ resource "aws_iam_role" "read_eventbridge_events" {
         })
     }
 }
+
+output "write_eventbridge_events" {
+  value = aws_iam_role.write_eventbridge_events.arn
+}
+
+output "read_eventbridge_events" {
+  value = aws_iam_role.read_eventbridge_events.arn
+}
