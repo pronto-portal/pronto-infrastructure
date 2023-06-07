@@ -26,6 +26,8 @@ resource "aws_iam_role" "codebuild_service_role" {
                     "logs:CreateLogGroup",
                     "logs:CreateLogStream",
                     "logs:PutLogEvents",
+                    "ec2:DescribeSubnets",
+                    "ec2:DescribeSecurityGroups"
 
                 ]
 
@@ -35,8 +37,8 @@ resource "aws_iam_role" "codebuild_service_role" {
             {
                 Effect  = "Allow"
                 Action = ["s3:*"]
-                resources = [
-                Resource = aws_s3_bucket.pronto_artifacts.arn
+                Resource = [
+                  aws_s3_bucket.pronto_artifacts.arn
                 ]
             }
         ]

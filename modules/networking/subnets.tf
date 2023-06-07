@@ -49,3 +49,10 @@ output pronto_private_az_a {
 output pronto_private_az_b {
   value       = aws_subnet.pronto_private_az_b.id
 }
+
+output private_subnet_ids { 
+  value = [
+    aws_subnet.pronto_private_az_a.id,
+    aws_subnet.pronto_private_az_b.id
+  ]
+}

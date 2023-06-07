@@ -4,11 +4,22 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 4.0"
     }
+
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
   }
 }
 
 provider "aws" {
     region="us-east-1"
+}
+
+provider "github" {
+  token=var.github_access_token
+  owner=var.github_organization
+  base_url="https://github.com/pronto-portal/"
 }
 
 // todo: remote s3 bucket for tf-state
@@ -23,4 +34,12 @@ module "security_groups" {
 
 module "iam" {
     source = "./modules/iam"
+}
+
+module "cicd" {
+  source = "./modules/cicd"
+  vpc_id = module.networking.pronto_vpc_id
+  allow_all_egress_id = module.security_groups.allow_all_egress
+  private_subnet_ids = module.networking.private_subnet_ids
+  github_access_token = var.github_access_token
 }

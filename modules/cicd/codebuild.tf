@@ -1,6 +1,21 @@
-resource "aws_codebuild_project" "pronto_backend" {
-  name          = "pronto_backend"
-  description   = "ci for pronto backend"
+terraform {
+  required_providers {
+    github = {
+      source  = "integrations/github"
+      version = "~> 5.0"
+    }
+  }
+}
+
+resource "aws_codebuild_source_credential" "pronto_api_access_token" {
+  auth_type   = "PERSONAL_ACCESS_TOKEN"
+  server_type = "GITHUB"
+  token       = var.github_access_token
+}
+
+resource "aws_codebuild_project" "pronto_codebuild" {
+  name          = "pronto_codebuild"
+  description   = "ci for pronto api"
   build_timeout = "5"
   service_role  = aws_iam_role.codebuild_service_role.arn
 
@@ -27,6 +42,7 @@ resource "aws_codebuild_project" "pronto_backend" {
     type            = "GITHUB"
     location        = "https://github.com/pronto-portal/pronto-api.git"
     git_clone_depth = 1
+    buildspec = "buildspec.yml" 
 
     git_submodules_config {
       fetch_submodules = true
@@ -36,17 +52,37 @@ resource "aws_codebuild_project" "pronto_backend" {
   source_version = "main"
 
   vpc_config {
-    vpc_id = aws_vpc.pronto.id
-
-    subnets = [
-      aws_subnet.pronto_private_az_a.id
-      aws_subnet.pronto_private_az_b.id,
-    ]
-
-    security_group_ids = []
+    vpc_id = var.vpc_id
+    subnets = var.private_subnet_ids
+    security_group_ids = [var.allow_all_egress_id]
   }
 
   tags = {
     App = "pronto"
+  }
+}
+
+resource "aws_codebuild_webhook" "pronto_codebuild_webhook" {
+  project_name = aws_codebuild_project.pronto_codebuild.name
+  build_type = "BUILD"
+
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PUSH,PULL_REQUEST_MERGED"
+    }
+  }
+}
+
+resource "github_repository_webhook" "pronto_api" {
+  active     = true
+  events     = ["push"]
+  repository = var.repository_name
+
+  configuration {
+    url          = aws_codebuild_webhook.pronto_codebuild_webhook.payload_url
+    secret       = aws_codebuild_webhook.pronto_codebuild_webhook.secret
+    content_type = "json"
+    insecure_ssl = false
   }
 }
