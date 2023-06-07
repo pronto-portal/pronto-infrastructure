@@ -73,16 +73,3 @@ resource "aws_codebuild_webhook" "pronto_codebuild_webhook" {
     }
   }
 }
-
-resource "github_repository_webhook" "pronto_api" {
-  active     = true
-  events     = ["push"]
-  repository = var.repository_name
-
-  configuration {
-    url          = aws_codebuild_webhook.pronto_codebuild_webhook.payload_url
-    secret       = aws_codebuild_webhook.pronto_codebuild_webhook.secret
-    content_type = "json"
-    insecure_ssl = false
-  }
-}

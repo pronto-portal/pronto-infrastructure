@@ -19,7 +19,6 @@ provider "aws" {
 provider "github" {
   token=var.github_access_token
   owner=var.github_organization
-  base_url="https://github.com/pronto-portal/"
 }
 
 // todo: remote s3 bucket for tf-state
