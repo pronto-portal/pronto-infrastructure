@@ -30,19 +30,19 @@ resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
 
 resource "aws_apigatewayv2_integration" "pronto_api_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
-  integration_type = "HTTP_PROXY"
+  integration_type = "AWS_PROXY"
 
   connection_type    = "INTERNET"
-  integration_method = "ANY"
+  integration_method = "POST"
   integration_uri    = aws_lambda_function.pronto_api.invoke_arn
 }
 
 resource "aws_apigatewayv2_integration" "pronto_api_reminder_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
-  integration_type = "HTTP_PROXY"
+  integration_type = "AWS_PROXY"
 
   connection_type    = "INTERNET"
-  integration_method = "ANY"
+  integration_method = "POST"
   integration_uri    = aws_lambda_function.pronto_api_reminder.invoke_arn
 }
 
