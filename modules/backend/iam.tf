@@ -64,7 +64,7 @@ resource "aws_iam_role" "pronto_reminder_rule" {
 
 resource "aws_iam_role_policy" "pronto_invoke_reminder_function" {
   name = "pronto_api_lambda_create_events"
-  role = aws_iam_role.pronto_reminder_rule.arn
+  role = aws_iam_role.pronto_reminder_rule.id
 
   policy = jsonencode({
     Version = "2012-10-17"
