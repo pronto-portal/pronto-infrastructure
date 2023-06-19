@@ -26,6 +26,22 @@ resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
   api_id      = aws_apigatewayv2_api.pronto_api.id
   name        = var.api_gateway_stage
   auto_deploy = true
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.pronto_api_gateway.arn
+    format = jsonencode({ "requestId" : "$context.requestId",
+      "extendedRequestId" : "$context.extendedRequestId",
+      "ip" : "$context.identity.sourceIp",
+      "caller" : "$context.identity.caller",
+      "user" : "$context.identity.user",
+      "requestTime" : "$context.requestTime",
+      "httpMethod" : "$context.httpMethod",
+      "resourcePath" : "$context.resourcePath",
+      "status" : "$context.status",
+      "protocol" : "$context.protocol",
+      "responseLength" : "$context.responseLength",
+      "response" : "$context.response"
+    })
+  }
 }
 
 resource "aws_apigatewayv2_integration" "pronto_api_integration" {

@@ -47,10 +47,12 @@ resource "aws_iam_role_policy" "pronto_api_lambda_create_events" {
         ]
         Effect   = "Allow"
         Resource = "*"
-      },
+      }
     ]
   })
 }
+
+
 
 resource "aws_iam_role" "pronto_reminder_role" {
   name               = "pronto_reminder_role"
@@ -85,7 +87,17 @@ resource "aws_iam_role_policy_attachment" "pronto_api_lambda_role_vpc_access" {
   policy_arn = var.vpc_access_policy_arn
 }
 
+resource "aws_iam_role_policy_attachment" "pronto_api_lambda_logging" {
+  role       = aws_iam_role.pronto_api_lambda_role.id
+  policy_arn = var.cloudwatch_logging_arn
+}
+
 resource "aws_iam_role_policy_attachment" "pronto_reminder_role_vpc_access" {
   role       = aws_iam_role.pronto_reminder_role.id
   policy_arn = var.vpc_access_policy_arn
+}
+
+resource "aws_iam_role_policy_attachment" "pronto_api_reminder_lambda_logging" {
+  role       = aws_iam_role.pronto_reminder_role.id
+  policy_arn = var.cloudwatch_logging_arn
 }

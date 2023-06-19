@@ -34,6 +34,8 @@ variable "TOKEN_ENCRYPT_SECRET" {
 
 variable "vpc_access_policy_arn" {}
 
+variable "cloudwatch_logging_arn" {}
+
 variable "api_gateway_stage" {
   type    = string
   default = "dev"

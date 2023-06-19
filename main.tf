@@ -65,4 +65,5 @@ module "backend" {
   REFRESH_SECRET             = var.REFRESH_SECRET
   TOKEN_ENCRYPT_SECRET       = var.TOKEN_ENCRYPT_SECRET
   vpc_access_policy_arn      = module.iam.vpc_access_policy_arn
+  cloudwatch_logging_arn     = module.iam.cloudwatch_logging_arn
 }
