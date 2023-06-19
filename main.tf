@@ -54,9 +54,14 @@ module "cicd" {
   github_access_token = var.github_access_token
 }
 
-# module "backend" {
-#   source                     = "./modules/backend"
-#   pronto_artifacts_s3_bucket = module.cicd.pronto_artifacts_s3_bucket
-#   private_subnet_ids         = module.networking.private_subnet_ids
-#   allow_all_egress_id        = module.security_groups.allow_all_egress
-# }
+module "backend" {
+  source                     = "./modules/backend"
+  pronto_artifacts_s3_bucket = module.cicd.pronto_artifacts_s3_bucket
+  private_subnet_ids         = module.networking.private_subnet_ids
+  allow_all_egress_id        = module.security_groups.allow_all_egress
+  GOOGLE_CLIENT_ID           = var.GOOGLE_CLIENT_ID
+  GOOGLE_CLIENT_SECRET_ID    = var.GOOGLE_CLIENT_SECRET_ID
+  JWT_SECRET                 = var.JWT_SECRET
+  REFRESH_SECRET             = var.REFRESH_SECRET
+  TOKEN_ENCRYPT_SECRET       = var.TOKEN_ENCRYPT_SECRET
+}

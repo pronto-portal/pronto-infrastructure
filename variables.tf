@@ -9,3 +9,33 @@ variable "github_organization" {
   type    = string
   default = "pronto-portal"
 }
+
+variable "GOOGLE_CLIENT_ID" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+
+variable "GOOGLE_CLIENT_SECRET_ID" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+
+variable "JWT_SECRET" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+
+variable "REFRESH_SECRET" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+
+variable "TOKEN_ENCRYPT_SECRET" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
