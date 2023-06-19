@@ -3,7 +3,7 @@ resource "aws_lambda_function" "pronto_api" {
   s3_key        = "artifacts/pronto_codebuild/apollo-lambda.zip"
   function_name = "pronto_api"
   runtime       = "nodejs18.x"
-  role          = aws_iam_role.pronto_api_lambda_role
+  role          = aws_iam_role.pronto_api_lambda_role.arn
   handler       = "src/index.handler"
   timeout       = 180
 
@@ -28,7 +28,7 @@ resource "aws_lambda_function" "pronto_api_reminder" {
   s3_key        = "artifacts/pronto_codebuild/apollo-lambda.zip"
   function_name = "pronto_api_reminder"
   runtime       = "nodejs18.x"
-  role          = aws_iam_role.pronto_reminder_role
+  role          = aws_iam_role.pronto_reminder_role.arn
   handler       = "src/services/reminder/index.handler"
   timeout       = 180
 

@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "pronto_reminder_policy" {
     actions = ["sts:AssumeRole",
     "lambda:InvokeFunction"]
 
-    resources = ["arn_of_lambda_goes_here"]
+    resources = [aws_lambda_function.pronto_api.arn]
   }
 }
 
@@ -38,5 +38,5 @@ resource "aws_iam_role" "pronto_api_lambda_role" {
 
 resource "aws_iam_role" "pronto_reminder_role" {
   name               = "pronto_reminder_role"
-  assume_role_policy = data.aws_iam_policy_document.pronto_reminder_policy
+  assume_role_policy = data.aws_iam_policy_document.pronto_reminder_policy.json
 }
