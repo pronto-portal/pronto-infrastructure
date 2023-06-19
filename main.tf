@@ -12,6 +12,16 @@ terraform {
   }
 }
 
+terraform {
+  cloud {
+    organization = "branber"
+
+    workspaces {
+      name = "pronto"
+    }
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -42,5 +52,11 @@ module "cicd" {
   private_subnet_ids  = module.networking.private_subnet_ids
   private_subnet_arns = module.networking.private_subnet_arns
   github_access_token = var.github_access_token
-
 }
+
+# module "backend" {
+#   source                     = "./modules/backend"
+#   pronto_artifacts_s3_bucket = module.cicd.pronto_artifacts_s3_bucket
+#   private_subnet_ids         = module.networking.private_subnet_ids
+#   allow_all_egress_id        = module.security_groups.allow_all_egress
+# }
