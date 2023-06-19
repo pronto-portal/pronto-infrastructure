@@ -31,3 +31,10 @@ variable "TOKEN_ENCRYPT_SECRET" {
   sensitive = true
   nullable  = false
 }
+
+variable "vpc_access_policy_arn" {}
+
+variable "api_gateway_stage" {
+  type    = string
+  default = "dev"
+}

@@ -98,3 +98,12 @@ resource "aws_iam_role_policy" "pronto_invoke_reminder_function" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "pronto_api_lambda_role_vpc_access" {
+  role       = aws_iam_role.pronto_api_lambda_role.id
+  policy_arn = var.vpc_access_policy_arn
+}
+
+resource "aws_iam_role_policy_attachment" "pronto_reminder_role_vpc_access" {
+  role       = aws_iam_role.pronto_reminder_role.id
+  policy_arn = var.vpc_access_policy_arn
+}
