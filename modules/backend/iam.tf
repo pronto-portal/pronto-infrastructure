@@ -7,11 +7,8 @@ data "aws_iam_policy_document" "pronto_api_lambda_policy" {
       identifiers = ["lambda.amazonaws.com"]
     }
 
-    actions = ["sts:AssumeRole",
-      "events:PutRule",
-      "events:PutTargets",
-      "events:DeleteRule",
-    "events:RemoveTargets"]
+    actions = ["sts:AssumeRole"
+    ]
   }
 }
 
@@ -21,11 +18,27 @@ data "aws_iam_policy_document" "pronto_reminder_policy" {
 
     principals {
       type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"
+    ]
+
+    resources = [aws_lambda_function.pronto_api.arn]
+  }
+}
+
+data "aws_iam_policy_document" "pronto_reminder_rule" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
       identifiers = ["events.amazonaws.com"]
     }
 
-    actions = ["sts:AssumeRole",
-    "lambda:InvokeFunction"]
+    actions = ["sts:AssumeRole"
+    ]
 
     resources = [aws_lambda_function.pronto_api.arn]
   }
@@ -36,7 +49,52 @@ resource "aws_iam_role" "pronto_api_lambda_role" {
   assume_role_policy = data.aws_iam_policy_document.pronto_api_lambda_policy.json
 }
 
+resource "aws_iam_role_policy" "pronto_api_lambda_create_events" {
+  name = "pronto_api_lambda_create_events"
+  role = aws_iam_role.pronto_api_lambda_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "events:PutRule",
+          "events:PutTargets",
+          "events:DeleteRule",
+          "events:RemoveTargets",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
+
 resource "aws_iam_role" "pronto_reminder_role" {
   name               = "pronto_reminder_role"
   assume_role_policy = data.aws_iam_policy_document.pronto_reminder_policy.json
 }
+
+resource "aws_iam_role" "pronto_reminder_rule" {
+  name               = "pronto_reminder_rule"
+  assume_role_policy = data.aws_iam_policy_document.pronto_reminder_rule.json
+}
+
+resource "aws_iam_role_policy" "pronto_invoke_reminder_function" {
+  name = "pronto_api_lambda_create_events"
+  role = aws_iam_role.pronto_reminder_rule.arn
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "lambda:InvokeFunction"
+        ]
+        Effect   = "Allow"
+        Resource = aws_lambda_function.pronto_api_reminder.arn
+      },
+    ]
+  })
+}
+
