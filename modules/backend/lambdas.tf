@@ -8,7 +8,7 @@ resource "aws_lambda_function" "pronto_api" {
   timeout       = 180
 
   vpc_config {
-    security_group_ids = [var.var.allow_all_egress_id]
+    security_group_ids = [var.allow_all_egress_id]
     subnet_ids         = var.private_subnet_ids
   }
 
@@ -33,7 +33,7 @@ resource "aws_lambda_function" "pronto_api_reminder" {
   timeout       = 180
 
   vpc_config {
-    security_group_ids = [var.var.allow_all_egress_id]
+    security_group_ids = [var.allow_all_egress_id]
     subnet_ids         = var.private_subnet_ids
   }
 
