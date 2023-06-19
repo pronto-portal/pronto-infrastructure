@@ -18,7 +18,7 @@ resource "aws_apigatewayv2_api" "pronto_api" {
       "GET",
       "POST"
     ]
-    allow_origins = ["localhost:3000"]
+    allow_origins = ["http://localhost:3000"]
   }
 }
 
@@ -48,14 +48,14 @@ resource "aws_apigatewayv2_integration" "pronto_api_reminder_integration" {
 
 resource "aws_apigatewayv2_route" "graphql" {
   api_id    = aws_apigatewayv2_api.pronto_api.id
-  route_key = "ANY /graphql/{proxy+}"
+  route_key = "ANY /graphql"
 
   target = "integrations/${aws_apigatewayv2_integration.pronto_api_integration.id}"
 }
 
 resource "aws_apigatewayv2_route" "reminder" {
   api_id    = aws_apigatewayv2_api.pronto_api.id
-  route_key = "ANY /reminder/{proxy+}"
+  route_key = "ANY /reminder"
 
   target = "integrations/${aws_apigatewayv2_integration.pronto_api_reminder_integration.id}"
 }

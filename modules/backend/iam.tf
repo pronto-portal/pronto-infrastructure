@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "pronto_api_lambda_policy" {
+data "aws_iam_policy_document" "assume_role_lambda" {
   statement {
     effect = "Allow"
 
@@ -9,22 +9,6 @@ data "aws_iam_policy_document" "pronto_api_lambda_policy" {
 
     actions = ["sts:AssumeRole"
     ]
-  }
-}
-
-data "aws_iam_policy_document" "pronto_reminder_policy" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"
-    ]
-
-    resources = [aws_lambda_function.pronto_api.arn]
   }
 }
 
@@ -39,14 +23,12 @@ data "aws_iam_policy_document" "pronto_reminder_rule" {
 
     actions = ["sts:AssumeRole"
     ]
-
-    resources = [aws_lambda_function.pronto_api.arn]
   }
 }
 
 resource "aws_iam_role" "pronto_api_lambda_role" {
   name               = "pronto_api_lambda_role"
-  assume_role_policy = data.aws_iam_policy_document.pronto_api_lambda_policy.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_lambda.json
 }
 
 resource "aws_iam_role_policy" "pronto_api_lambda_create_events" {
@@ -72,7 +54,7 @@ resource "aws_iam_role_policy" "pronto_api_lambda_create_events" {
 
 resource "aws_iam_role" "pronto_reminder_role" {
   name               = "pronto_reminder_role"
-  assume_role_policy = data.aws_iam_policy_document.pronto_reminder_policy.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_lambda.json
 }
 
 resource "aws_iam_role" "pronto_reminder_rule" {
