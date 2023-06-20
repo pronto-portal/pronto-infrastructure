@@ -1,6 +1,5 @@
 resource "aws_lambda_function" "pronto_api" {
-  s3_bucket     = var.pronto_artifacts_s3_bucket
-  s3_key        = "artifacts/pronto_codebuild/apollo-lambda.zip"
+  filename      = "/dev/null" # Dummy file name
   function_name = "pronto_api"
   runtime       = "nodejs18.x"
   role          = aws_iam_role.pronto_api_lambda_role.arn
@@ -24,8 +23,7 @@ resource "aws_lambda_function" "pronto_api" {
 }
 
 resource "aws_lambda_function" "pronto_api_reminder" {
-  s3_bucket     = var.pronto_artifacts_s3_bucket
-  s3_key        = "artifacts/pronto_codebuild/apollo-lambda.zip"
+  filename      = "/dev/null" # Dummy file name
   function_name = "pronto_api_reminder"
   runtime       = "nodejs18.x"
   role          = aws_iam_role.pronto_reminder_role.arn
@@ -48,3 +46,10 @@ resource "aws_lambda_function" "pronto_api_reminder" {
   }
 }
 
+output "pronto_api_function_arn" {
+  value = aws_lambda_function.pronto_api.arn
+}
+
+output "pronto_api_reminder_function_arn" {
+  value = aws_lambda_function.pronto_api_reminder.arn
+}

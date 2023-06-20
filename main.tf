@@ -45,25 +45,28 @@ module "iam" {
   source = "./modules/iam"
 }
 
-module "cicd" {
-  source              = "./modules/cicd"
-  vpc_id              = module.networking.pronto_vpc_id
-  allow_all_egress_id = module.security_groups.allow_all_egress
-  private_subnet_ids  = module.networking.private_subnet_ids
-  private_subnet_arns = module.networking.private_subnet_arns
-  github_access_token = var.github_access_token
+module "backend" {
+  source                  = "./modules/backend"
+  private_subnet_ids      = module.networking.private_subnet_ids
+  allow_all_egress_id     = module.security_groups.allow_all_egress
+  GOOGLE_CLIENT_ID        = var.GOOGLE_CLIENT_ID
+  GOOGLE_CLIENT_SECRET_ID = var.GOOGLE_CLIENT_SECRET_ID
+  JWT_SECRET              = var.JWT_SECRET
+  REFRESH_SECRET          = var.REFRESH_SECRET
+  TOKEN_ENCRYPT_SECRET    = var.TOKEN_ENCRYPT_SECRET
+  vpc_access_policy_arn   = module.iam.vpc_access_policy_arn
+  cloudwatch_logging_arn  = module.iam.cloudwatch_logging_arn
 }
 
-module "backend" {
-  source                     = "./modules/backend"
-  pronto_artifacts_s3_bucket = module.cicd.pronto_artifacts_s3_bucket
-  private_subnet_ids         = module.networking.private_subnet_ids
-  allow_all_egress_id        = module.security_groups.allow_all_egress
-  GOOGLE_CLIENT_ID           = var.GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET_ID    = var.GOOGLE_CLIENT_SECRET_ID
-  JWT_SECRET                 = var.JWT_SECRET
-  REFRESH_SECRET             = var.REFRESH_SECRET
-  TOKEN_ENCRYPT_SECRET       = var.TOKEN_ENCRYPT_SECRET
-  vpc_access_policy_arn      = module.iam.vpc_access_policy_arn
-  cloudwatch_logging_arn     = module.iam.cloudwatch_logging_arn
+module "cicd" {
+  source                           = "./modules/cicd"
+  vpc_id                           = module.networking.pronto_vpc_id
+  allow_all_egress_id              = module.security_groups.allow_all_egress
+  private_subnet_ids               = module.networking.private_subnet_ids
+  private_subnet_arns              = module.networking.private_subnet_arns
+  github_access_token              = var.github_access_token
+  pronto_api_function_arn          = module.backend.pronto_api_function_arn
+  pronto_api_reminder_function_arn = module.backend.pronto_api_reminder_function_arn
 }
+
+

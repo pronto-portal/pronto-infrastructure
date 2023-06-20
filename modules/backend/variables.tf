@@ -1,4 +1,3 @@
-variable "pronto_artifacts_s3_bucket" {}
 variable "private_subnet_ids" {}
 variable "allow_all_egress_id" {}
 

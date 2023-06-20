@@ -72,6 +72,16 @@ resource "aws_iam_role" "codebuild_service_role" {
               "ec2:Subnet" : var.private_subnet_arns
             }
           }
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "lambda:UpdateFunctionCode"
+          ],
+          "Resource" : [
+            var.pronto_api_function_arn,
+            var.pronto_api_reminder_function_arn
+          ]
         }
       ]
     })
