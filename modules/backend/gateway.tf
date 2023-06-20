@@ -39,7 +39,9 @@ resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
       "status" : "$context.status",
       "protocol" : "$context.protocol",
       "responseLength" : "$context.responseLength",
-      "response" : "$context.response"
+      "error" : "$context.error.message",
+      "integrationError" : "$context.integrationErrorMessage",
+      "integrationStatus" : "$context.integration.status"
     })
   }
 }
