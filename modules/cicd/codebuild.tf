@@ -48,6 +48,11 @@ resource "aws_codebuild_project" "pronto_codebuild" {
       name  = "artifacts_bucket"
       value = aws_s3_bucket.pronto_artifacts.bucket
     }
+
+    environment_variable {
+      name  = "artifacts_key"
+      value = "artifacts/pronto_codebuild/apollo-lambda.zip"
+    }
   }
 
   logs_config {
