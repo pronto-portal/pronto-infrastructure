@@ -21,6 +21,7 @@ resource "aws_codebuild_project" "pronto_codebuild" {
 
   artifacts {
     type = "NO_ARTIFACTS"
+    name = null
   }
 
   environment {
