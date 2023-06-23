@@ -31,21 +31,6 @@ resource "aws_iam_role" "codebuild_service_role" {
           Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
         },
         {
-          Effect = "Allow"
-          "Resource" : [
-            "${aws_s3_bucket.pronto_artifacts.arn}/*"
-          ],
-          "Action" : [
-            "s3:PutObject",
-            "s3:GetObject",
-            "s3:GetObjectVersion",
-            "s3:GetBucketAcl",
-            "s3:GetBucketLocation"
-          ]
-
-
-        },
-        {
           "Effect" : "Allow",
           "Action" : [
             "ec2:CreateNetworkInterface",
@@ -76,14 +61,19 @@ resource "aws_iam_role" "codebuild_service_role" {
         {
           "Effect" : "Allow",
           "Action" : [
-            "lambda:UpdateFunctionCode"
+            "ecr:BatchCheckLayerAvailability",
+            "ecr:CompleteLayerUpload",
+            "ecr:GetAuthorizationToken",
+            "ecr:InitiateLayerUpload",
+            "ecr:PutImage",
+            "ecr:UploadLayerPart"
           ],
           "Resource" : [
-            var.pronto_api_function_arn,
-            var.pronto_api_reminder_function_arn
+            var.pronto_ecr_repo_arn
           ]
         }
       ]
     })
   }
 }
+// todo: decouple inline policies

@@ -20,12 +20,7 @@ resource "aws_codebuild_project" "pronto_codebuild" {
   service_role  = aws_iam_role.codebuild_service_role.arn
 
   artifacts {
-    type                = "S3"
-    encryption_disabled = true
-    location            = aws_s3_bucket.pronto_artifacts.bucket
-    path                = "artifacts"
-    packaging           = "NONE"
-    namespace_type      = "NONE"
+    type = "NO_ARTIFACTS"
   }
 
   environment {
@@ -33,25 +28,11 @@ resource "aws_codebuild_project" "pronto_codebuild" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:5.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
 
     environment_variable {
-      name  = "pronto_api_function_arn"
-      value = var.pronto_api_function_arn
-    }
-
-    environment_variable {
-      name  = "pronto_api_reminder_function_arn"
-      value = var.pronto_api_reminder_function_arn
-    }
-
-    environment_variable {
-      name  = "artifacts_bucket"
-      value = aws_s3_bucket.pronto_artifacts.bucket
-    }
-
-    environment_variable {
-      name  = "artifacts_key"
-      value = "artifacts/pronto_codebuild/apollo-lambda.zip"
+      name  = "REPOSITORY_URI"
+      value = var.pronto_ecr_repo_url
     }
   }
 
