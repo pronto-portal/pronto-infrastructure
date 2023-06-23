@@ -63,7 +63,6 @@ resource "aws_iam_role" "codebuild_service_role" {
           "Action" : [
             "ecr:BatchCheckLayerAvailability",
             "ecr:CompleteLayerUpload",
-            "ecr:GetAuthorizationToken",
             "ecr:InitiateLayerUpload",
             "ecr:PutImage",
             "ecr:UploadLayerPart"
@@ -71,6 +70,13 @@ resource "aws_iam_role" "codebuild_service_role" {
           "Resource" : [
             var.pronto_ecr_repo_arn
           ]
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "ecr:GetAuthorizationToken",
+          ],
+          "Resource" : "*"
         }
       ]
     })
