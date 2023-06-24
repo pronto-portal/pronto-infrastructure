@@ -47,6 +47,7 @@ module "iam" {
 
 module "backend" {
   source                  = "./modules/backend"
+  vpc_id                  = module.networking.pronto_vpc_id
   private_subnet_ids      = module.networking.private_subnet_ids
   allow_all_egress_id     = module.security_groups.allow_all_egress
   GOOGLE_CLIENT_ID        = var.GOOGLE_CLIENT_ID
@@ -56,6 +57,7 @@ module "backend" {
   TOKEN_ENCRYPT_SECRET    = var.TOKEN_ENCRYPT_SECRET
   vpc_access_policy_arn   = module.iam.vpc_access_policy_arn
   cloudwatch_logging_arn  = module.iam.cloudwatch_logging_arn
+  pronto_ecr_repo_url     = module.ecr.repository_url
 }
 
 module "ecr" {

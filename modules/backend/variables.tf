@@ -1,5 +1,6 @@
 variable "private_subnet_ids" {}
 variable "allow_all_egress_id" {}
+variable "vpc_id" {}
 
 variable "GOOGLE_CLIENT_ID" {
   type      = string
@@ -34,6 +35,8 @@ variable "TOKEN_ENCRYPT_SECRET" {
 variable "vpc_access_policy_arn" {}
 
 variable "cloudwatch_logging_arn" {}
+
+variable "pronto_ecr_repo_url" {}
 
 variable "api_gateway_stage" {
   type    = string

@@ -22,6 +22,12 @@ resource "aws_apigatewayv2_api" "pronto_api" {
   }
 }
 
+resource "aws_api_gateway_vpc_link" "pronto_api_nlb_vpc_link" {
+  name        = "pronto-api-nlb-vpc-link"
+  description = "My VPC link for API Gateway to NLB"
+  target_arns = [aws_lb.pronto_api_nlb.arn]
+}
+
 resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
   api_id      = aws_apigatewayv2_api.pronto_api.id
   name        = var.api_gateway_stage
@@ -55,11 +61,28 @@ resource "aws_apigatewayv2_integration" "pronto_api_reminder_integration" {
   integration_uri    = aws_lambda_function.pronto_api_reminder.invoke_arn
 }
 
+resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
+  api_id           = aws_apigatewayv2_api.pronto_api.id
+  integration_type = "AWS_PROXY"
+
+  connection_type    = "INTERNET"
+  integration_method = "POST"
+  integration_uri    = "http://${aws_lb.pronto_api_nlb.dns_name}/{proxy}"
+  connection_id      = aws_api_gateway_vpc_link.pronto_api_nlb_vpc_link.id
+}
+
 resource "aws_apigatewayv2_route" "reminder" {
   api_id    = aws_apigatewayv2_api.pronto_api.id
   route_key = "ANY /reminder"
 
   target = "integrations/${aws_apigatewayv2_integration.pronto_api_reminder_integration.id}"
+}
+
+resource "aws_apigatewayv2_route" "graphql" {
+  api_id    = aws_apigatewayv2_api.pronto_api.id
+  route_key = "ANY /graphql"
+
+  target = "integrations/${aws_apigatewayv2_integration.pronto_api_graphql_integration.id}"
 }
 
 resource "aws_lambda_permission" "api_gateway_pronto_api_reminder" {
