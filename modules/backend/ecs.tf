@@ -27,7 +27,7 @@ resource "aws_ecs_cluster" "pronto-cluster" {
 resource "aws_ecs_task_definition" "pronto-api-task" {
   family                   = "pronto-api"
   network_mode             = "awsvpc"
-  requires_compatibilities = ["EC2"] // Use "FARGATE" for Fargate type
+  requires_compatibilities = ["FARGATE"] // Use "FARGATE" for Fargate type
 
   container_definitions = jsonencode(
     [
@@ -37,8 +37,7 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
         "essential" : true,
         "portMappings" : [
           {
-            "containerPort" : 4000,
-            "hostPort" : 4000
+            "containerPort" : 4000
           }
         ],
         "memory" : 500,
@@ -46,6 +45,10 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
       }
   ])
 
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "X86_64"
+  }
 }
 
 resource "aws_ecs_service" "pronto_api_service" {
@@ -54,7 +57,7 @@ resource "aws_ecs_service" "pronto_api_service" {
   task_definition      = aws_ecs_task_definition.pronto-api-task.arn
   desired_count        = 1
   force_new_deployment = true
-  launch_type          = "EC2"
+  launch_type          = "FARGATE"
 
   load_balancer {
     target_group_arn = aws_lb_target_group.pronto_api_nlb_target_group.arn
