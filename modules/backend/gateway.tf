@@ -67,7 +67,7 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
 
   connection_type    = "VPC_LINK"
   integration_method = "ANY"
-  integration_uri    = "http://${aws_lb.pronto_api_nlb.dns_name}/{proxy}"
+  integration_uri    = aws_lb.pronto_api_nlb.arn
   connection_id      = aws_api_gateway_vpc_link.pronto_api_nlb_vpc_link.id
 }
 

@@ -8,10 +8,11 @@ resource "aws_lb" "pronto_api_nlb" {
 }
 
 resource "aws_lb_target_group" "pronto_api_nlb_target_group" {
-  name     = "pronto-api-nlb-target-group"
-  port     = 4000
-  protocol = "TCP"
-  vpc_id   = var.vpc_id
+  name        = "pronto-api-nlb-target-group"
+  port        = 4000
+  protocol    = "TCP"
+  vpc_id      = var.vpc_id
+  target_type = "ip"
 }
 
 resource "aws_lb_listener" "pronto_api_nlb_listener" {
