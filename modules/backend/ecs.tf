@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
   family                   = "pronto-api"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"] // Use "FARGATE" for Fargate type
-  memory                   = 500
+  memory                   = 512
   cpu                      = 256
 
   container_definitions = jsonencode(
@@ -42,7 +42,7 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
             "containerPort" : 4000
           }
         ],
-        "memory" : 500,
+        "memory" : 512,
         "cpu" : 256
       }
   ])
