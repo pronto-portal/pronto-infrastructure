@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
         "portMappings" : [
           {
             "containerPort" : 4000,
-            "hostPort" : 80
+            "hostPort" : 4000
           }
         ],
         "memory" : 500,

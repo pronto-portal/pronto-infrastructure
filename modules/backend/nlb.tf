@@ -9,8 +9,8 @@ resource "aws_lb" "pronto_api_nlb" {
 
 resource "aws_lb_target_group" "pronto_api_nlb_target_group" {
   name     = "pronto-api-nlb-target-group"
-  port     = 80
-  protocol = "HTTP"
+  port     = 4000
+  protocol = "TCP"
   vpc_id   = var.vpc_id
 }
 
