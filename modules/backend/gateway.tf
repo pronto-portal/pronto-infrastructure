@@ -63,11 +63,11 @@ resource "aws_apigatewayv2_integration" "pronto_api_reminder_integration" {
 
 resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
-  integration_type = "AWS_PROXY"
+  integration_type = "HTTP_PROXY"
 
   connection_type    = "VPC_LINK"
   integration_method = "ANY"
-  integration_uri    = aws_lb.pronto_api_nlb.arn
+  integration_uri    = aws_lb_listener.pronto_api_nlb_listener.arn
   connection_id      = aws_api_gateway_vpc_link.pronto_api_nlb_vpc_link.id
 }
 
