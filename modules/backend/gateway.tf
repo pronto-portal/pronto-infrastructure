@@ -22,10 +22,10 @@ resource "aws_apigatewayv2_api" "pronto_api" {
   }
 }
 
-resource "aws_api_gateway_vpc_link" "pronto_api_nlb_vpc_link" {
-  name        = "pronto-api-nlb-vpc-link"
-  description = "My VPC link for API Gateway to NLB"
-  target_arns = [aws_lb.pronto_api_nlb.arn]
+resource "aws_apigatewayv2_vpc_link" "pronto_api_nlb_vpc_link" {
+  name               = "pronto-api-nlb-vpc-link"
+  subnet_ids         = var.private_subnet_ids
+  security_group_ids = [aws_security_group.pronto_api_vpc_link_sg.id]
 }
 
 resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
@@ -68,7 +68,7 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   connection_type    = "VPC_LINK"
   integration_method = "ANY"
   integration_uri    = aws_lb_listener.pronto_api_nlb_listener.arn
-  connection_id      = aws_api_gateway_vpc_link.pronto_api_nlb_vpc_link.id
+  connection_id      = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
 }
 
 resource "aws_apigatewayv2_route" "reminder" {
