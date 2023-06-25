@@ -97,7 +97,7 @@ resource "aws_iam_role" "pronto_ecs_task_execution" {
 
 
 resource "aws_iam_role" "pronto_event_rule_role" {
-  name = "pronto_ecs_task_execution"
+  name = "pronto_event_rule_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
