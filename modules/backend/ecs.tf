@@ -71,7 +71,7 @@ resource "aws_ecs_service" "pronto_api_service" {
 
   network_configuration {
     subnets          = var.private_subnet_ids
-    security_groups  = [var.allow_all_egress_id]
+    security_groups  = [var.allow_all_egress_id, aws_security_group.ecs_allow_inbound_nlb.id]
     assign_public_ip = false
   }
 }
