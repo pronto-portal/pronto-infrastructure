@@ -14,7 +14,6 @@ resource "aws_iam_policy" "ecr_image_pull" {
           "ecr:InitiateLayerUpload",
           "ecr:PutImage",
           "ecr:UploadLayerPart",
-          "ecr:GetAuthorizationToken",
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
