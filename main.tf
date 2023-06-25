@@ -66,15 +66,16 @@ module "backend" {
 }
 
 module "cicd" {
-  source                    = "./modules/cicd"
-  vpc_id                    = module.networking.pronto_vpc_id
-  allow_all_egress_id       = module.security_groups.allow_all_egress
-  private_subnet_ids        = module.networking.private_subnet_ids
-  private_subnet_arns       = module.networking.private_subnet_arns
-  github_access_token       = var.github_access_token
-  pronto_ecr_repo_arn       = module.ecr.arn
-  pronto_ecr_repo_url       = module.ecr.repository_url
-  ecr_image_pull_policy_arn = module.ecr.ecr_image_pull_policy_arn
+  source                                         = "./modules/cicd"
+  vpc_id                                         = module.networking.pronto_vpc_id
+  allow_all_egress_id                            = module.security_groups.allow_all_egress
+  private_subnet_ids                             = module.networking.private_subnet_ids
+  private_subnet_arns                            = module.networking.private_subnet_arns
+  github_access_token                            = var.github_access_token
+  pronto_ecr_repo_arn                            = module.ecr.arn
+  pronto_ecr_repo_url                            = module.ecr.repository_url
+  ecr_image_pull_policy_arn                      = module.ecr.ecr_image_pull_policy_arn
+  pronto_event_rule_invoke_reminder_function_arn = module.backend.pronto_event_rule_invoke_reminder_function_arn
 }
 
 

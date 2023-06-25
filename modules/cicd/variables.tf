@@ -5,6 +5,7 @@ variable "private_subnet_arns" {}
 variable "pronto_ecr_repo_arn" {}
 variable "pronto_ecr_repo_url" {}
 variable "ecr_image_pull_policy_arn" {}
+variable "pronto_event_rule_invoke_reminder_function_arn" {}
 
 variable "github_access_token" {
   type        = string
