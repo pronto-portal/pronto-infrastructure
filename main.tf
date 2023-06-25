@@ -45,34 +45,36 @@ module "iam" {
   source = "./modules/iam"
 }
 
-module "backend" {
-  source                  = "./modules/backend"
-  vpc_id                  = module.networking.pronto_vpc_id
-  private_subnet_ids      = module.networking.private_subnet_ids
-  allow_all_egress_id     = module.security_groups.allow_all_egress
-  GOOGLE_CLIENT_ID        = var.GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET_ID = var.GOOGLE_CLIENT_SECRET_ID
-  JWT_SECRET              = var.JWT_SECRET
-  REFRESH_SECRET          = var.REFRESH_SECRET
-  TOKEN_ENCRYPT_SECRET    = var.TOKEN_ENCRYPT_SECRET
-  vpc_access_policy_arn   = module.iam.vpc_access_policy_arn
-  cloudwatch_logging_arn  = module.iam.cloudwatch_logging_arn
-  pronto_ecr_repo_url     = module.ecr.repository_url
-}
-
 module "ecr" {
   source = "./modules/ecr"
 }
 
+module "backend" {
+  source                    = "./modules/backend"
+  vpc_id                    = module.networking.pronto_vpc_id
+  private_subnet_ids        = module.networking.private_subnet_ids
+  allow_all_egress_id       = module.security_groups.allow_all_egress
+  GOOGLE_CLIENT_ID          = var.GOOGLE_CLIENT_ID
+  GOOGLE_CLIENT_SECRET_ID   = var.GOOGLE_CLIENT_SECRET_ID
+  JWT_SECRET                = var.JWT_SECRET
+  REFRESH_SECRET            = var.REFRESH_SECRET
+  TOKEN_ENCRYPT_SECRET      = var.TOKEN_ENCRYPT_SECRET
+  vpc_access_policy_arn     = module.iam.vpc_access_policy_arn
+  cloudwatch_logging_arn    = module.iam.cloudwatch_logging_arn
+  pronto_ecr_repo_url       = module.ecr.repository_url
+  ecr_image_pull_policy_arn = module.ecr.ecr_image_pull_policy_arn
+}
+
 module "cicd" {
-  source              = "./modules/cicd"
-  vpc_id              = module.networking.pronto_vpc_id
-  allow_all_egress_id = module.security_groups.allow_all_egress
-  private_subnet_ids  = module.networking.private_subnet_ids
-  private_subnet_arns = module.networking.private_subnet_arns
-  github_access_token = var.github_access_token
-  pronto_ecr_repo_arn = module.ecr.arn
-  pronto_ecr_repo_url = module.ecr.repository_url
+  source                    = "./modules/cicd"
+  vpc_id                    = module.networking.pronto_vpc_id
+  allow_all_egress_id       = module.security_groups.allow_all_egress
+  private_subnet_ids        = module.networking.private_subnet_ids
+  private_subnet_arns       = module.networking.private_subnet_arns
+  github_access_token       = var.github_access_token
+  pronto_ecr_repo_arn       = module.ecr.arn
+  pronto_ecr_repo_url       = module.ecr.repository_url
+  ecr_image_pull_policy_arn = module.ecr.ecr_image_pull_policy_arn
 }
 
 

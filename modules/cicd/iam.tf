@@ -57,29 +57,14 @@ resource "aws_iam_role" "codebuild_service_role" {
               "ec2:Subnet" : var.private_subnet_arns
             }
           }
-        },
-        {
-          "Effect" : "Allow",
-          "Action" : [
-            "ecr:BatchCheckLayerAvailability",
-            "ecr:CompleteLayerUpload",
-            "ecr:InitiateLayerUpload",
-            "ecr:PutImage",
-            "ecr:UploadLayerPart"
-          ],
-          "Resource" : [
-            var.pronto_ecr_repo_arn
-          ]
-        },
-        {
-          "Effect" : "Allow",
-          "Action" : [
-            "ecr:GetAuthorizationToken",
-          ],
-          "Resource" : "*"
         }
       ]
     })
   }
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_service_role_image_pull" {
+  role       = aws_iam_role.codebuild_service_role.name
+  policy_arn = var.ecr_image_pull_policy_arn
 }
 // todo: decouple inline policies

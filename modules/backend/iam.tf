@@ -52,8 +52,6 @@ resource "aws_iam_role_policy" "pronto_api_lambda_create_events" {
   })
 }
 
-
-
 resource "aws_iam_role" "pronto_reminder_role" {
   name               = "pronto_reminder_role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_lambda.json
@@ -63,6 +61,24 @@ resource "aws_iam_role" "pronto_reminder_rule" {
   name               = "pronto_reminder_rule"
   assume_role_policy = data.aws_iam_policy_document.pronto_reminder_rule.json
 }
+
+resource "aws_iam_role" "pronto_ecs_task_execution" {
+  name = "pronto_ecs_task_execution"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Sid" : "",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "ecs-tasks.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
 
 resource "aws_iam_role_policy" "pronto_invoke_reminder_function" {
   name = "pronto_api_lambda_create_events"
@@ -100,4 +116,9 @@ resource "aws_iam_role_policy_attachment" "pronto_reminder_role_vpc_access" {
 resource "aws_iam_role_policy_attachment" "pronto_api_reminder_lambda_logging" {
   role       = aws_iam_role.pronto_reminder_role.id
   policy_arn = var.cloudwatch_logging_arn
+}
+
+resource "aws_iam_role_policy_attachment" "pronto_ecs_task_execution" {
+  role       = aws_iam_role.pronto_ecs_task_execution.id
+  policy_arn = var.ecr_image_pull_policy_arn
 }

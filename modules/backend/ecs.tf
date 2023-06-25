@@ -31,6 +31,8 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
   memory                   = 512
   cpu                      = 256
 
+  execution_role_arn = aws_iam_role.pronto_ecs_task_execution.arn
+
   container_definitions = jsonencode(
     [
       {
