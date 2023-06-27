@@ -45,7 +45,41 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
           }
         ],
         "memory" : 512,
-        "cpu" : 256
+        "cpu" : 256,
+        "environment" : [
+          {
+            "name" : "DATABASE_URL",
+            "value" : "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${aws_secretsmanager_secret_version.db_password.secret_string}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
+          },
+          {
+            "name" : "GOOGLE_CLIENT_ID",
+            "value" : var.GOOGLE_CLIENT_ID
+          },
+          {
+            "name" : "GOOGLE_CLIENT_SECRET_ID",
+            "value" : var.GOOGLE_CLIENT_SECRET_ID
+          },
+          {
+            "name" : "JWT_SECRET",
+            "value" : var.JWT_SECRET
+          },
+          {
+            "name" : "REFRESH_SECRET",
+            "value" : var.REFRESH_SECRET
+          },
+          {
+            "name" : "TOKEN_ENCRYPT_SECRET",
+            "value" : var.TOKEN_ENCRYPT_SECRET
+          },
+          {
+            "name" : "REMINDER_FUNCTION_ARN",
+            "value" : aws_lambda_function.pronto_api_reminder.arn
+          },
+          {
+            "name" : "ECS_TASK_EXECUTION_ROLE_ARN",
+            "value" : aws_iam_role.pronto_ecs_task_execution.arn
+          }
+        ]
       }
   ])
 
@@ -70,8 +104,11 @@ resource "aws_ecs_service" "pronto_api_service" {
   }
 
   network_configuration {
-    subnets          = var.private_subnet_ids
-    security_groups  = [var.allow_all_egress_id, aws_security_group.ecs_allow_inbound_nlb.id]
+    subnets = var.private_subnet_ids
+    security_groups = [
+      var.allow_all_egress_id,
+      aws_security_group.ecs_allow_inbound_nlb.id,
+    aws_security_group.ecs_allow_rds_ingress.id]
     assign_public_ip = false
   }
 }
