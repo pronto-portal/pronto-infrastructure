@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    github = {
-      source  = "integrations/github"
-      version = "~> 5.0"
-    }
-  }
-}
-
 resource "aws_codebuild_source_credential" "pronto_api_access_token" {
   auth_type   = "PERSONAL_ACCESS_TOKEN"
   server_type = "GITHUB"
