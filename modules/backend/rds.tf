@@ -9,7 +9,7 @@ resource "aws_kms_key" "master_user_kms_key" {
 }
 
 resource "aws_secretsmanager_secret" "db_password" {
-  name       = random_password.password.result
+  name       = "db_password"
   kms_key_id = aws_kms_key.master_user_kms_key.id
 }
 
