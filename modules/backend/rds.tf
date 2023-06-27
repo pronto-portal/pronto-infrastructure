@@ -18,9 +18,15 @@ resource "aws_secretsmanager_secret_version" "db_password" {
   secret_string = random_password.password.result
 }
 
+resource "aws_db_subnet_group" "pronto_rds_subnet_group" {
+  name       = "pronto_rds_subnet_group"
+  subnet_ids = var.private_subnet_ids
+}
+
 resource "aws_rds_cluster" "pronto_rds_cluster" {
   cluster_identifier            = "pronto-postgres"
   engine                        = "aurora-postgresql"
+  db_subnet_group_name          = aws_db_subnet_group.pronto_rds_subnet_group.name
   engine_mode                   = "provisioned"
   engine_version                = "14.6"
   database_name                 = "pronto"
