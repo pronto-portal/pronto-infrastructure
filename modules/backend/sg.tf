@@ -44,8 +44,8 @@ resource "aws_security_group" "ecs_allow_rds_ingress" {
   vpc_id      = var.vpc_id // your VPC ID
 
   ingress {
-    from_port   = 5432
-    to_port     = 5432
+    from_port   = 4000
+    to_port     = 4000
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/26"]
   }
@@ -64,8 +64,22 @@ resource "aws_security_group" "rds_allow_ecs_ingress" {
   vpc_id      = var.vpc_id // your VPC ID
 
   ingress {
-    from_port   = 4000
-    to_port     = 4000
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/26"]
+  }
+
+  egress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/26"]
+  }
+
+  egress {
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["10.0.0.0/26"]
   }
