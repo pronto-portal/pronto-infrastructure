@@ -1,7 +1,7 @@
 resource "random_password" "password" {
   length           = 16
   special          = true
-  override_special = "!#%*()-_[]{}<>"
+  override_special = "!#%&*()-_=+[]{}<>?"
 }
 
 resource "aws_kms_key" "master_user_kms_key" {
@@ -50,6 +50,6 @@ resource "aws_rds_cluster_instance" "pronto_db_instance" {
 }
 
 output "DATABASE_URL" {
-  value     = "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${aws_secretsmanager_secret_version.db_password.secret_string}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
+  value     = "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${urlencode(aws_secretsmanager_secret_version.db_password.secret_string)}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
   sensitive = true
 }
