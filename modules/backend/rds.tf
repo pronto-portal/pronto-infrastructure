@@ -31,9 +31,10 @@ resource "aws_rds_cluster" "pronto_rds_cluster" {
   engine_version                = "14.6"
   database_name                 = "pronto"
   master_username               = "master_user"
-  manage_master_user_password   = true
+  master_password               = aws_secretsmanager_secret_version.db_password.secret_string
   master_user_secret_kms_key_id = aws_kms_key.master_user_kms_key.key_id
-  vpc_security_group_ids        = [aws_security_group.rds_allow_ecs_ingress.id]
+
+  vpc_security_group_ids = [aws_security_group.rds_allow_ecs_ingress.id]
 
   serverlessv2_scaling_configuration {
     max_capacity = 1.0
@@ -49,6 +50,6 @@ resource "aws_rds_cluster_instance" "pronto_db_instance" {
 }
 
 output "DATABASE_URL" {
-  value     = "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${random_password.password.result}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
+  value     = "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${aws_secretsmanager_secret_version.db_password.secret_string}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
   sensitive = true
 }
