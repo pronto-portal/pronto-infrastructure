@@ -76,6 +76,7 @@ module "cicd" {
   pronto_ecr_repo_url                            = module.ecr.repository_url
   ecr_image_pull_policy_arn                      = module.ecr.ecr_image_pull_policy_arn
   pronto_event_rule_invoke_reminder_function_arn = module.backend.pronto_event_rule_invoke_reminder_function_arn
+  DATABASE_URL                                   = module.backend.DATABASE_URL
 }
 
 

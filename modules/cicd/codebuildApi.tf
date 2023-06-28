@@ -36,6 +36,11 @@ resource "aws_codebuild_project" "pronto_codebuild" {
       name  = "AWS_DEFAULT_REGION"
       value = data.aws_region.current.name
     }
+
+    environment_variable {
+      name  = "DATABASE_URL"
+      value = var.DATABASE_URL
+    }
   }
 
   logs_config {

@@ -6,6 +6,7 @@ variable "pronto_ecr_repo_arn" {}
 variable "pronto_ecr_repo_url" {}
 variable "ecr_image_pull_policy_arn" {}
 variable "pronto_event_rule_invoke_reminder_function_arn" {}
+variable "DATABASE_URL" {}
 
 variable "github_access_token" {
   type        = string
@@ -19,3 +20,4 @@ variable "repository_name" {
   description = "repository name"
   default     = "pronto-api"
 }
+
