@@ -5,7 +5,8 @@ resource "aws_subnet" "pronto_private_az_a" {
   availability_zone       = "us-east-1a"
 
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    Name = "private_az_a"
   }
 }
 
@@ -16,7 +17,8 @@ resource "aws_subnet" "pronto_private_az_b" {
   availability_zone       = "us-east-1b"
 
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    Name = "private_az_b"
   }
 }
 
@@ -27,7 +29,8 @@ resource "aws_subnet" "pronto_public_az_a" {
   availability_zone       = "us-east-1a"
 
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    Name = "public_az_a"
   }
 }
 
@@ -38,7 +41,8 @@ resource "aws_subnet" "pronto_public_az_b" {
   availability_zone       = "us-east-1b"
 
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    Name = "public_az_b"
   }
 }
 

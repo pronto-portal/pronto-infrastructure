@@ -7,7 +7,8 @@ resource "aws_route_table" "pronto_public_route_table" {
   }
 
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    Name = "public"
   }
 }
 
@@ -15,11 +16,12 @@ resource "aws_route_table" "pronto_private_route_table_az_a" {
   vpc_id = aws_vpc.pronto.id
 
   route {
-      cidr_block = "0.0.0.0/0"
-      nat_gateway_id = aws_nat_gateway.pronto_nat_gateway_az_a.id
-    }
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.pronto_nat_gateway_az_a.id
+  }
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    name = "private_az_a"
   }
 }
 
@@ -27,10 +29,11 @@ resource "aws_route_table" "pronto_private_route_table_az_b" {
   vpc_id = aws_vpc.pronto.id
 
   route {
-      cidr_block = "0.0.0.0/0"
-      nat_gateway_id = aws_nat_gateway.pronto_nat_gateway_az_b.id
-    }
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.pronto_nat_gateway_az_b.id
+  }
   tags = {
-    App = "pronto"
+    App  = "pronto"
+    Name = "private_az_b"
   }
 }
