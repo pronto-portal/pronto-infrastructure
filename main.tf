@@ -85,4 +85,6 @@ module "cicd" {
   DATABASE_URL                                   = module.backend.DATABASE_URL
 }
 
-
+output "db_pass" {
+  value = module.backend.db_pass
+}
