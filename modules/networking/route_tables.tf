@@ -21,7 +21,7 @@ resource "aws_route_table" "pronto_private_route_table_az_a" {
   }
   tags = {
     App  = "pronto"
-    name = "private_az_a"
+    Name = "private_az_a"
   }
 }
 
