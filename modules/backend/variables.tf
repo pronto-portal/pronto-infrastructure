@@ -2,6 +2,7 @@ variable "private_subnet_ids" {}
 variable "allow_all_egress_id" {}
 variable "vpc_id" {}
 variable "db_secret_id" {}
+variable "db_secret_version_id" {}
 
 variable "GOOGLE_CLIENT_ID" {
   type      = string

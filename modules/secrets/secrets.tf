@@ -16,3 +16,7 @@ resource "aws_secretsmanager_secret_version" "rds_password" {
 output "db_secret_id" {
   value = aws_secretsmanager_secret.rds_password.id
 }
+
+output "db_secret_version_id" {
+  value = aws_secretsmanager_secret_version.rds_password.version_id
+}
