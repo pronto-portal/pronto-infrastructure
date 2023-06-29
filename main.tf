@@ -45,6 +45,10 @@ module "iam" {
   source = "./modules/iam"
 }
 
+module "secrets" {
+  source = "./modules/secrets"
+}
+
 module "ecr" {
   source = "./modules/ecr"
 }
@@ -63,6 +67,7 @@ module "backend" {
   cloudwatch_logging_arn    = module.iam.cloudwatch_logging_arn
   pronto_ecr_repo_url       = module.ecr.repository_url
   ecr_image_pull_policy_arn = module.ecr.ecr_image_pull_policy_arn
+  db_secret_id              = module.secrets.db_secret_id
 }
 
 module "cicd" {
