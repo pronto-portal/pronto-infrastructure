@@ -11,7 +11,7 @@ resource "aws_rds_cluster" "pronto_rds_cluster" {
   engine_version       = "14.6"
   database_name        = "pronto"
   master_username      = "master_user"
-  master_password      = "abcd"
+  master_password      = "abcdefghijk"
 
   vpc_security_group_ids = [aws_security_group.rds_allow_ecs_ingress.id]
 
