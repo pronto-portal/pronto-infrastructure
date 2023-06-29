@@ -84,8 +84,3 @@ module "cicd" {
   pronto_event_rule_invoke_reminder_function_arn = module.backend.pronto_event_rule_invoke_reminder_function_arn
   DATABASE_URL                                   = module.backend.DATABASE_URL
 }
-
-output "db_pass" {
-  value     = module.backend.db_pass
-  sensitive = false
-}
