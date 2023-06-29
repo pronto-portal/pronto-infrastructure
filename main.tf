@@ -86,5 +86,6 @@ module "cicd" {
 }
 
 output "db_pass" {
-  value = module.backend.db_pass
+  value     = module.backend.db_pass
+  sensitive = false
 }

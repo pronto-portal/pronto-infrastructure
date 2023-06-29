@@ -35,5 +35,6 @@ output "DATABASE_URL" {
 }
 
 output "db_pass" {
-  value = aws_rds_cluster.pronto_rds_cluster.master_password
+  value     = aws_rds_cluster.pronto_rds_cluster.master_password
+  sensitive = false
 }
