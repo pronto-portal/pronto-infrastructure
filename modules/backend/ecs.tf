@@ -70,8 +70,8 @@ output "ecs_cluster_arn" {
   value = aws_ecs_cluster.pronto-cluster.arn
 }
 
-output "ecs_service_name" {
-  value = aws_ecs_service.pronto_api_service.name
+output "ecs_service_id" {
+  value = aws_ecs_service.pronto_api_service.id
 }
 
 output "ecs_task_definition_arn" {

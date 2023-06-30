@@ -65,7 +65,7 @@ resource "aws_iam_role" "codebuild_service_role" {
 
           Effect = "Allow"
           Resource = [
-            var.ecs_service_name
+            var.ecs_service_id
           ]
         },
         {

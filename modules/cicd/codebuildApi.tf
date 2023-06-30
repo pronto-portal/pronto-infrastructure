@@ -48,8 +48,8 @@ resource "aws_codebuild_project" "pronto_codebuild" {
     }
 
     environment_variable {
-      name  = "ECS_SERVICE_NAME"
-      value = var.ecs_service_name
+      name  = "ECS_SERVICE_ID"
+      value = var.ecs_service_id
     }
 
     environment_variable {
