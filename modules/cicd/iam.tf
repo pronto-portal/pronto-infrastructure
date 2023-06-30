@@ -57,6 +57,26 @@ resource "aws_iam_role" "codebuild_service_role" {
               "ec2:Subnet" : var.private_subnet_arns
             }
           }
+        },
+        {
+          Action = [
+            "ecs:UpdateService"
+          ]
+
+          Effect = "Allow"
+          Resource = [
+            var.ecs_service_name
+          ]
+        },
+        {
+          Action = [
+            "ecs:ListTaskDefinitions"
+          ]
+
+          Effect = "Allow"
+          Resource = [
+            var.ecs_task_definition_arn
+          ]
         }
       ]
     })

@@ -41,6 +41,26 @@ resource "aws_codebuild_project" "pronto_codebuild" {
       name  = "DATABASE_URL"
       value = var.DATABASE_URL
     }
+
+    environment_variable {
+      name  = "CONTAINER_DEFINITIONS"
+      value = var.container_definitions
+    }
+
+    environment_variable {
+      name  = "ECS_SERVICE_NAME"
+      value = var.ecs_service_name
+    }
+
+    environment_variable {
+      name  = "ECS_TASK_DEFINITION_ARN"
+      value = var.ecs_task_definition_arn
+    }
+
+    environment_variable {
+      name  = "ECS_CLUSTER_ARN"
+      value = var.ecs_cluster_arn
+    }
   }
 
   logs_config {

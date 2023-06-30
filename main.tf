@@ -83,4 +83,8 @@ module "cicd" {
   ecr_image_pull_policy_arn                      = module.ecr.ecr_image_pull_policy_arn
   pronto_event_rule_invoke_reminder_function_arn = module.backend.pronto_event_rule_invoke_reminder_function_arn
   DATABASE_URL                                   = module.backend.DATABASE_URL
+  container_definitions                          = module.backend.container_definitions
+  ecs_service_name                               = module.backend.ecs_service_name
+  ecs_task_definition_arn                        = module.backend.ecs_task_definition_arn
+  ecs_cluster_arn                                = module.backend.ecs_cluster_arn
 }

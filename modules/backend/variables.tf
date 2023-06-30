@@ -43,3 +43,71 @@ variable "api_gateway_stage" {
   type    = string
   default = "dev"
 }
+
+locals {
+  container_definitions = jsonencode(
+    [
+      {
+        "name" : "api",
+        "image" : "${var.pronto_ecr_repo_url}:latest",
+        "essential" : true,
+        "portMappings" : [
+          {
+            "containerPort" : 4000
+          }
+        ],
+        "memory" : 512,
+        "cpu" : 256,
+        "environment" : [
+          {
+            "name" : "DATABASE_URL",
+            "value" : "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${data.aws_secretsmanager_secret_version.rds_password.secret_string}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
+          },
+          {
+            "name" : "GOOGLE_CLIENT_ID",
+            "value" : var.GOOGLE_CLIENT_ID
+          },
+          {
+            "name" : "GOOGLE_CLIENT_SECRET_ID",
+            "value" : var.GOOGLE_CLIENT_SECRET_ID
+          },
+          {
+            "name" : "JWT_SECRET",
+            "value" : var.JWT_SECRET
+          },
+          {
+            "name" : "REFRESH_SECRET",
+            "value" : var.REFRESH_SECRET
+          },
+          {
+            "name" : "TOKEN_ENCRYPT_SECRET",
+            "value" : var.TOKEN_ENCRYPT_SECRET
+          },
+          {
+            "name" : "REMINDER_FUNCTION_ARN",
+            "value" : aws_lambda_function.pronto_api_reminder.arn
+          },
+          {
+            "name" : "ECS_TASK_EXECUTION_ROLE_ARN",
+            "value" : aws_iam_role.pronto_ecs_task_execution.arn
+          },
+          {
+            "name" : "EVENT_RULE_ROLE_ARN",
+            "value" : aws_iam_role.pronto_event_rule_role.arn
+          }
+        ],
+        "logConfiguration" : {
+          "logDriver" : "awslogs",
+          "options" : {
+            "awslogs-group" : "${aws_cloudwatch_log_group.pronto_ecs.name}",
+            "awslogs-region" : data.aws_region.current.name,
+            "awslogs-stream-prefix" : "ecs"
+          }
+        }
+      }
+  ])
+}
+
+output "container_definitions" {
+  value = local.container_definitions
+}

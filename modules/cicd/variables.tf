@@ -7,6 +7,10 @@ variable "pronto_ecr_repo_url" {}
 variable "ecr_image_pull_policy_arn" {}
 variable "pronto_event_rule_invoke_reminder_function_arn" {}
 variable "DATABASE_URL" {}
+variable "container_definitions" {}
+variable "ecs_service_name" {}
+variable "ecs_task_definition_arn" {}
+variable "ecs_cluster_arn" {}
 
 variable "github_access_token" {
   type        = string
