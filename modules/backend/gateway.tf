@@ -52,15 +52,6 @@ resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
   }
 }
 
-resource "aws_apigatewayv2_integration" "pronto_api_reminder_integration" {
-  api_id           = aws_apigatewayv2_api.pronto_api.id
-  integration_type = "AWS_PROXY"
-
-  connection_type    = "INTERNET"
-  integration_method = "POST"
-  integration_uri    = aws_lambda_function.pronto_api_reminder.invoke_arn
-}
-
 resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
   integration_type = "HTTP_PROXY"
@@ -71,27 +62,9 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   connection_id      = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
 }
 
-resource "aws_apigatewayv2_route" "reminder" {
-  api_id    = aws_apigatewayv2_api.pronto_api.id
-  route_key = "ANY /reminder"
-
-  target = "integrations/${aws_apigatewayv2_integration.pronto_api_reminder_integration.id}"
-}
-
 resource "aws_apigatewayv2_route" "graphql" {
   api_id    = aws_apigatewayv2_api.pronto_api.id
   route_key = "ANY /graphql"
 
   target = "integrations/${aws_apigatewayv2_integration.pronto_api_graphql_integration.id}"
-}
-
-resource "aws_lambda_permission" "api_gateway_pronto_api_reminder" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.pronto_api_reminder.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  # The /*/* portion grants access from any method on any resource
-  # within the API Gateway "REST API".
-  source_arn = "${aws_apigatewayv2_api.pronto_api.execution_arn}/*/*"
 }
