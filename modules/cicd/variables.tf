@@ -12,6 +12,7 @@ variable "ecs_service_id" {}
 variable "ecs_task_definition_arn" {}
 variable "ecs_cluster_arn" {}
 variable "pronto_ecs_task_execution_arn" {}
+variable "task_definition" {}
 
 variable "github_access_token" {
   type        = string

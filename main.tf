@@ -85,6 +85,7 @@ module "cicd" {
   DATABASE_URL                                   = module.backend.DATABASE_URL
   container_definitions                          = module.backend.container_definitions
   ecs_service_id                                 = module.backend.ecs_service_id
+  task_definition                                = module.backend.task_definition
   ecs_task_definition_arn                        = module.backend.ecs_task_definition_arn
   ecs_cluster_arn                                = module.backend.ecs_cluster_arn
   pronto_ecs_task_execution_arn                  = module.backend.pronto_ecs_task_execution_arn

@@ -61,6 +61,11 @@ resource "aws_codebuild_project" "pronto_codebuild" {
       name  = "ECS_CLUSTER_ARN"
       value = var.ecs_cluster_arn
     }
+
+    environment_variable {
+      name  = "TASK_DEFINITION_JSON"
+      value = var.task_definition
+    }
   }
 
   logs_config {

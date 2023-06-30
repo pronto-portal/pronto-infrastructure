@@ -87,6 +87,14 @@ resource "aws_iam_role" "codebuild_service_role" {
           Resource = [
             var.pronto_ecs_task_execution_arn
           ]
+        },
+        {
+          Action = [
+            "ecs:RegisterTaskDefinition"
+          ]
+
+          Effect   = "Allow"
+          Resource = "*"
         }
       ]
     })
