@@ -87,4 +87,5 @@ module "cicd" {
   ecs_service_id                                 = module.backend.ecs_service_id
   ecs_task_definition_arn                        = module.backend.ecs_task_definition_arn
   ecs_cluster_arn                                = module.backend.ecs_cluster_arn
+  pronto_ecs_task_execution_arn                  = module.backend.pronto_ecs_task_execution_arn
 }

@@ -156,3 +156,7 @@ resource "aws_iam_role_policy_attachment" "pronto_event_rule_role_invoke_functio
 output "pronto_event_rule_invoke_reminder_function_arn" {
   value = aws_iam_role.pronto_event_rule_role.arn
 }
+
+output "pronto_ecs_task_execution_arn" {
+  value = aws_iam_role.pronto_ecs_task_execution.arn
+}

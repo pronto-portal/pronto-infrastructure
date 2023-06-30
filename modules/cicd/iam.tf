@@ -77,6 +77,16 @@ resource "aws_iam_role" "codebuild_service_role" {
           Resource = [
             var.ecs_task_definition_arn
           ]
+        },
+        {
+          Action = [
+            "iam:PassRole"
+          ]
+
+          Effect = "Allow"
+          Resource = [
+            var.pronto_ecs_task_execution_arn
+          ]
         }
       ]
     })
