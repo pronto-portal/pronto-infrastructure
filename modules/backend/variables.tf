@@ -106,17 +106,25 @@ locals {
     }
   ]
 
-  container_definitions = jsonencode(local.decoded_container_definitions)
+  container_definitions    = jsonencode(local.decoded_container_definitions)
+  requires_compatibilities = ["FARGATE"]
+  operating_system_family  = "LINUX"
+  cpu_architecture         = "X86_64"
+
+  runtime_platform = {
+    operating_system_family = local.operating_system_family
+    cpu_architecture        = local.cpu_architecture
+  }
 
   task_definition = jsonencode({
     "family" : aws_ecs_task_definition.pronto-api-task.family,
     "networkMode" : aws_ecs_task_definition.pronto-api-task.network_mode,
-    "requiresCompatibilities" : aws_ecs_task_definition.pronto-api-task.requires_compatibilities,
+    "requiresCompatibilities" : local.requires_compatibilities,
     "memory" : aws_ecs_task_definition.pronto-api-task.memory,
     "cpu" : aws_ecs_task_definition.pronto-api-task.cpu,
     "executionRoleArn" : aws_ecs_task_definition.pronto-api-task.execution_role_arn,
     "containerDefinitions" : local.decoded_container_definitions,
-    "runtimePlatform" : aws_ecs_task_definition.pronto-api-task.runtime_platform
+    "runtimePlatform" : local.runtime_platform
   })
 }
 

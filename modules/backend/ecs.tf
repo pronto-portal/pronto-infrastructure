@@ -27,7 +27,7 @@ resource "aws_ecs_cluster" "pronto-cluster" {
 resource "aws_ecs_task_definition" "pronto-api-task" {
   family                   = "pronto-api"
   network_mode             = "awsvpc"
-  requires_compatibilities = ["FARGATE"] // Use "FARGATE" for Fargate type
+  requires_compatibilities = local.requires_compatibilities // Use "FARGATE" for Fargate type
   memory                   = 512
   cpu                      = 256
 
@@ -35,8 +35,8 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
   container_definitions = local.container_definitions
 
   runtime_platform {
-    operating_system_family = "LINUX"
-    cpu_architecture        = "X86_64"
+    operating_system_family = local.operating_system_family // "LINUX"
+    cpu_architecture        = local.cpu_architecture        // "X86_64"
   }
 }
 
