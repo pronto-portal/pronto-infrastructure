@@ -138,6 +138,11 @@ resource "aws_iam_role_policy_attachment" "pronto_ecs_task_execution" {
   policy_arn = var.ecr_image_pull_policy_arn
 }
 
+resource "aws_iam_role_policy_attachment" "pronto_ecs_task_logging" {
+  role       = aws_iam_role.pronto_ecs_task_execution.id
+  policy_arn = var.cloudwatch_logging_arn
+}
+
 resource "aws_iam_role_policy_attachment" "pronto_ecs_task_create_events_attachment" {
   role       = aws_iam_role.pronto_ecs_task_execution.id
   policy_arn = aws_iam_policy.pronto_ecs_task_create_events.arn

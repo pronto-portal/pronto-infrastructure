@@ -83,7 +83,15 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
             "name" : "EVENT_RULE_ROLE_ARN",
             "value" : aws_iam_role.pronto_event_rule_role.arn
           }
-        ]
+        ],
+        "logConfiguration" : {
+          "logDriver" : "awslogs",
+          "options" : {
+            "awslogs-group" : "${aws_cloudwatch_log_group.pronto_ecs.name}",
+            "awslogs-region" : data.aws_region.current.name,
+            "awslogs-stream-prefix" : "ecs"
+          }
+        }
       }
   ])
 
