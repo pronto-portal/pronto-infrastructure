@@ -47,8 +47,8 @@ resource "aws_ecs_service" "pronto_api_service" {
   desired_count                      = 1
   force_new_deployment               = true
   launch_type                        = "FARGATE"
-  deployment_maximum_percent         = 150
-  deployment_minimum_healthy_percent = 50
+  deployment_maximum_percent         = 200
+  deployment_minimum_healthy_percent = 100
 
   load_balancer {
     target_group_arn = aws_lb_target_group.pronto_api_nlb_target_group.arn
