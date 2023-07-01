@@ -5,12 +5,17 @@ resource "aws_apigatewayv2_api" "pronto_api" {
   cors_configuration {
     allow_credentials = true
     expose_headers = [
+      "Set-Cookie",
       "set-cookie",
+      "cookies",
       "Cookie"
     ]
     allow_headers = [
       "Content-Type",
+      "Set-Cookie",
+      "cookies",
       "set-cookie",
+      "Cookie",
       "Origin",
       "Accept",
       "X-XSS-Protection"
@@ -57,10 +62,11 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
   integration_type = "HTTP_PROXY"
 
-  connection_type    = "VPC_LINK"
-  integration_method = "ANY"
-  integration_uri    = aws_lb_listener.pronto_api_nlb_listener.arn
-  connection_id      = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
+  connection_type      = "VPC_LINK"
+  integration_method   = "ANY"
+  integration_uri      = aws_lb_listener.pronto_api_nlb_listener.arn
+  connection_id        = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
+  passthrough_behavior = "WHEN_NO_MATCH"
 }
 
 resource "aws_apigatewayv2_route" "graphql" {
