@@ -112,8 +112,8 @@ locals {
   cpu_architecture         = "X86_64"
 
   runtime_platform = {
-    operating_system_family = local.operating_system_family
-    cpu_architecture        = local.cpu_architecture
+    operatingSystemFamily = local.operating_system_family
+    cpuArchitecture       = local.cpu_architecture
   }
 
   task_definition = jsonencode({
