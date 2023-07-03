@@ -4,27 +4,21 @@ resource "aws_apigatewayv2_api" "pronto_api" {
 
   cors_configuration {
     allow_credentials = true
-    expose_headers = [
-      "Set-Cookie",
-      "set-cookie",
-      "cookies",
-      "Cookie"
-    ]
+    expose_headers    = ["set-cookie", "Cookie"]
     allow_headers = [
-      "Content-Type",
-      "Set-Cookie",
-      "cookies",
       "set-cookie",
       "Cookie",
+      "Content-Type",
       "Origin",
       "Accept",
-      "X-XSS-Protection"
+      "X-XSS-Protection",
+      "Authorization",
     ]
     allow_methods = [
       "GET",
       "POST"
     ]
-    allow_origins = ["http://localhost:3000"]
+    allow_origins = ["http://localhost:3000", aws_lb.pronto_api_nlb.dns_name]
   }
 }
 

@@ -93,6 +93,14 @@ locals {
         {
           "name" : "EVENT_RULE_ROLE_ARN",
           "value" : aws_iam_role.pronto_event_rule_role.arn
+        },
+        {
+          "name" : "LOAD_BALANCER_DNS",
+          "value" : aws_lb.pronto_api_nlb.dns_name
+        },
+        {
+          "name" : "API_GATEWAY_DNS",
+          "value" : aws_apigatewayv2_api.pronto_api.api_endpoint
         }
       ],
       "logConfiguration" : {
