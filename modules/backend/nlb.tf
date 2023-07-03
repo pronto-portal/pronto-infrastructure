@@ -4,7 +4,7 @@ resource "aws_lb" "pronto_api_nlb" {
   load_balancer_type = "network"
   subnets            = var.private_subnet_ids
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 }
 
 resource "aws_lb_target_group" "pronto_api_nlb_target_group" {
