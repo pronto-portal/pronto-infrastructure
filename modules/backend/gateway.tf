@@ -18,7 +18,7 @@ resource "aws_apigatewayv2_api" "pronto_api" {
       "GET",
       "POST"
     ]
-    allow_origins = ["http://localhost:3000", aws_lb.pronto_api_nlb.dns_name]
+    allow_origins = ["http://localhost:3000"]
   }
 }
 
