@@ -153,6 +153,20 @@ resource "aws_iam_role_policy_attachment" "pronto_event_rule_role_invoke_functio
   policy_arn = aws_iam_policy.pronto_event_rule_invoke_reminder_function.arn
 }
 
+resource "aws_iam_user" "pronto_ecs_task_worker" {
+  name = "Pronto_ecs_task_worker"
+}
+
+resource "aws_iam_access_key" "pronto_ecs_task_worker_key" {
+  user = aws_iam_user.pronto_ecs_task_worker.name
+}
+
+resource "aws_iam_user_policy" "pronto_ecs_task_worker_policy" {
+  name   = "pronto_ecs_task_worker_policy"
+  user   = aws_iam_user.pronto_ecs_task_worker.name
+  policy = aws_iam_policy.pronto_ecs_task_create_events.policy
+}
+
 output "pronto_event_rule_invoke_reminder_function_arn" {
   value = aws_iam_role.pronto_event_rule_role.arn
 }

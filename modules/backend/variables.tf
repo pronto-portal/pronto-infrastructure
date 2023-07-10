@@ -101,6 +101,18 @@ locals {
         {
           "name" : "API_GATEWAY_DNS",
           "value" : aws_apigatewayv2_api.pronto_api.api_endpoint
+        },
+        {
+          "name" : "AWS_ACCESS_KEY_ID",
+          "value" : aws_iam_access_key.pronto_ecs_task_worker_key.id
+        },
+        {
+          "name" : "AWS_SECRET_ACCESS_KEY",
+          "value" : aws_iam_access_key.pronto_ecs_task_worker_key.secret
+        },
+        {
+          "name" : "AWS_DEFAULT_REGION",
+          "value" : data.aws_region.current
         }
       ],
       "logConfiguration" : {
