@@ -112,7 +112,7 @@ locals {
         },
         {
           "name" : "AWS_DEFAULT_REGION",
-          "value" : data.aws_region.current
+          "value" : data.aws_region.current.name
         }
       ],
       "logConfiguration" : {
