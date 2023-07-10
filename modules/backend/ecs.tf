@@ -41,9 +41,9 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
 }
 
 resource "aws_ecs_service" "pronto_api_service" {
-  name    = "pronto_api_service"
-  cluster = aws_ecs_cluster.pronto-cluster.arn // e.g. "arn:aws:ecs:us-east-1:123456789012:cluster/my_cluster"
-  // task_definition                    = aws_ecs_task_definition.pronto-api-task.arn
+  name                               = "pronto_api_service"
+  cluster                            = aws_ecs_cluster.pronto-cluster.arn // e.g. "arn:aws:ecs:us-east-1:123456789012:cluster/my_cluster"
+  task_definition                    = aws_ecs_task_definition.pronto-api-task.arn
   desired_count                      = 1
   force_new_deployment               = true
   launch_type                        = "FARGATE"
