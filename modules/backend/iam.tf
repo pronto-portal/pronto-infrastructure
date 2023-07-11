@@ -139,6 +139,11 @@ resource "aws_iam_user_policy_attachment" "pronto_ecs_user_worker_attachment" {
   policy_arn = aws_iam_policy.pronto_ecs_user_policy.arn
 }
 
+resource "aws_iam_user_policy_attachment" "pronto_ecs_user_worker_events_attachment" {
+  user       = aws_iam_user.pronto_ecs_task_worker.name
+  policy_arn = aws_iam_policy.pronto_ecs_task_create_events.arn
+}
+
 resource "aws_iam_role_policy_attachment" "pronto_api_lambda_role_vpc_access" {
   role       = aws_iam_role.pronto_api_lambda_role.id
   policy_arn = var.vpc_access_policy_arn
