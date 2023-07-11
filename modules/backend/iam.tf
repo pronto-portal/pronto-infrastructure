@@ -46,7 +46,8 @@ resource "aws_iam_policy" "pronto_ecs_task_create_events" {
         ]
         Effect   = "Allow"
         Resource = "*"
-      }
+      },
+
     ]
   })
 }
@@ -113,6 +114,26 @@ resource "aws_iam_role" "pronto_event_rule_role" {
   })
 }
 
+
+resource "aws_iam_policy" "pronto_ecs_user_policy" {
+  name = "pronto_ecs_task_create_events"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "iam:GetRole",
+          "iam:PassRole"
+        ]
+        Effect   = "Allow"
+        Resource = aws_iam_role.pronto_event_rule_role.arn
+      },
+
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "pronto_api_lambda_role_vpc_access" {
   role       = aws_iam_role.pronto_api_lambda_role.id
   policy_arn = var.vpc_access_policy_arn
@@ -164,7 +185,7 @@ resource "aws_iam_access_key" "pronto_ecs_task_worker_key" {
 resource "aws_iam_user_policy" "pronto_ecs_task_worker_policy" {
   name   = "pronto_ecs_task_worker_policy"
   user   = aws_iam_user.pronto_ecs_task_worker.name
-  policy = aws_iam_policy.pronto_ecs_task_create_events.policy
+  policy = aws_iam_policy.pronto_ecs_user_policy.policy
 }
 
 output "pronto_event_rule_invoke_reminder_function_arn" {
