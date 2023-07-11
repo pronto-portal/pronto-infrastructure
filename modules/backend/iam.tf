@@ -116,7 +116,7 @@ resource "aws_iam_role" "pronto_event_rule_role" {
 
 
 resource "aws_iam_policy" "pronto_ecs_user_policy" {
-  name = "pronto_ecs_task_create_events"
+  name = "pronto_ecs_user_policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
