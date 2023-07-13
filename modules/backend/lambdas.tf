@@ -13,11 +13,7 @@ resource "aws_lambda_function" "pronto_api_reminder" {
 
   environment {
     variables = {
-      GOOGLE_CLIENT_ID        = var.GOOGLE_CLIENT_ID
-      GOOGLE_CLIENT_SECRET_ID = var.GOOGLE_CLIENT_SECRET_ID
-      JWT_SECRET              = var.JWT_SECRET
-      REFRESH_SECRET          = var.REFRESH_SECRET
-      TOKEN_ENCRYPT_SECRET    = var.TOKEN_ENCRYPT_SECRET
+      REMINDER_EMAIL = aws_ses_email_identity.pronto_reminder_email_identity.email
     }
   }
 }
