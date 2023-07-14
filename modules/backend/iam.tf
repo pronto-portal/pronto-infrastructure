@@ -134,6 +134,25 @@ resource "aws_iam_policy" "pronto_ecs_user_policy" {
   })
 }
 
+resource "aws_iam_policy" "pronto_reminder_push_notifications_policy" {
+  name = "pronto_ecs_user_policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "sns:Publish",
+          "sns:CheckIfPhoneNumberIsOptedOut",
+          "ses:SendEmail"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_user_policy_attachment" "pronto_ecs_user_worker_attachment" {
   user       = aws_iam_user.pronto_ecs_task_worker.name
   policy_arn = aws_iam_policy.pronto_ecs_user_policy.arn
@@ -162,6 +181,11 @@ resource "aws_iam_role_policy_attachment" "pronto_reminder_role_vpc_access" {
 resource "aws_iam_role_policy_attachment" "pronto_api_reminder_lambda_logging" {
   role       = aws_iam_role.pronto_reminder_role.id
   policy_arn = var.cloudwatch_logging_arn
+}
+
+resource "aws_iam_role_policy_attachment" "pronto_api_reminder_push_notifications" {
+  role       = aws_iam_role.pronto_reminder_role.id
+  policy_arn = aws_iam_policy.pronto_reminder_push_notifications_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "pronto_ecs_task_execution" {
