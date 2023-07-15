@@ -144,7 +144,8 @@ resource "aws_iam_policy" "pronto_reminder_push_notifications_policy" {
         Action = [
           "sns:Publish",
           "sns:CheckIfPhoneNumberIsOptedOut",
-          "ses:SendEmail"
+          "ses:SendEmail",
+          "ses:SendRawEmail"
         ]
         Effect   = "Allow"
         Resource = "*"
