@@ -33,7 +33,7 @@ resource "aws_codebuild_project" "pronto_reminder_codebuild" {
 
     environment_variable {
       name  = "REMINDER_FUNCTION_ARN"
-      value = var.pronto_event_rule_invoke_reminder_function_arn
+      value = var.pronto_api_reminder_function_arn
     }
   }
 

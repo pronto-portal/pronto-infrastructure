@@ -72,21 +72,21 @@ module "backend" {
 }
 
 module "cicd" {
-  source                                         = "./modules/cicd"
-  vpc_id                                         = module.networking.pronto_vpc_id
-  allow_all_egress_id                            = module.security_groups.allow_all_egress
-  private_subnet_ids                             = module.networking.private_subnet_ids
-  private_subnet_arns                            = module.networking.private_subnet_arns
-  github_access_token                            = var.github_access_token
-  pronto_ecr_repo_arn                            = module.ecr.arn
-  pronto_ecr_repo_url                            = module.ecr.repository_url
-  ecr_image_pull_policy_arn                      = module.ecr.ecr_image_pull_policy_arn
-  pronto_event_rule_invoke_reminder_function_arn = module.backend.pronto_event_rule_invoke_reminder_function_arn
-  DATABASE_URL                                   = module.backend.DATABASE_URL
-  container_definitions                          = module.backend.container_definitions
-  ecs_service_id                                 = module.backend.ecs_service_id
-  task_definition                                = module.backend.task_definition
-  ecs_task_definition_arn                        = module.backend.ecs_task_definition_arn
-  ecs_cluster_arn                                = module.backend.ecs_cluster_arn
-  pronto_ecs_task_execution_arn                  = module.backend.pronto_ecs_task_execution_arn
+  source                           = "./modules/cicd"
+  vpc_id                           = module.networking.pronto_vpc_id
+  allow_all_egress_id              = module.security_groups.allow_all_egress
+  private_subnet_ids               = module.networking.private_subnet_ids
+  private_subnet_arns              = module.networking.private_subnet_arns
+  github_access_token              = var.github_access_token
+  pronto_ecr_repo_arn              = module.ecr.arn
+  pronto_ecr_repo_url              = module.ecr.repository_url
+  ecr_image_pull_policy_arn        = module.ecr.ecr_image_pull_policy_arn
+  pronto_api_reminder_function_arn = module.backend.pronto_api_reminder_function_arn
+  DATABASE_URL                     = module.backend.DATABASE_URL
+  container_definitions            = module.backend.container_definitions
+  ecs_service_id                   = module.backend.ecs_service_id
+  task_definition                  = module.backend.task_definition
+  ecs_task_definition_arn          = module.backend.ecs_task_definition_arn
+  ecs_cluster_arn                  = module.backend.ecs_cluster_arn
+  pronto_ecs_task_execution_arn    = module.backend.pronto_ecs_task_execution_arn
 }
