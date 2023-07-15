@@ -135,7 +135,7 @@ resource "aws_iam_policy" "pronto_ecs_user_policy" {
 }
 
 resource "aws_iam_policy" "pronto_reminder_push_notifications_policy" {
-  name = "pronto_ecs_user_policy"
+  name = "pronto_reminder_push_notifications_policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
