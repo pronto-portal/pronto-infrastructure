@@ -95,6 +95,13 @@ resource "aws_iam_role" "codebuild_service_role" {
 
           Effect   = "Allow"
           Resource = "*"
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "lambda:UpdateFunctionCode"
+          ],
+          "Resource" : [var.pronto_api_reminder_function_arn]
         }
       ]
     })
