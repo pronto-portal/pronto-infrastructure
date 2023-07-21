@@ -3,7 +3,7 @@ resource "aws_lambda_function" "pronto_api_reminder" {
   function_name = "pronto_api_reminder"
   runtime       = "nodejs18.x"
   role          = aws_iam_role.pronto_reminder_role.arn
-  handler       = "/pronto_api_reminder/dist/index.handler"
+  handler       = "dist/index.handler"
   timeout       = 180
 
   vpc_config {
