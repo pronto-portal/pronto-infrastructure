@@ -114,6 +114,22 @@ resource "aws_iam_role" "pronto_event_rule_role" {
   })
 }
 
+resource "aws_iam_role" "sns_delivery_status_role" {
+  name = "sns_delivery_status_role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        "Sid" : "",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "sns.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+}
 
 resource "aws_iam_policy" "pronto_ecs_user_policy" {
   name = "pronto_ecs_user_policy"
@@ -167,6 +183,11 @@ resource "aws_iam_user_policy_attachment" "pronto_ecs_user_worker_events_attachm
 resource "aws_iam_role_policy_attachment" "pronto_api_lambda_role_vpc_access" {
   role       = aws_iam_role.pronto_api_lambda_role.id
   policy_arn = var.vpc_access_policy_arn
+}
+
+resource "aws_iam_role_policy_attachment" "sns_delivery_status_role_logging" {
+  role       = aws_iam_role.sns_delivery_status_role.id
+  policy_arn = var.cloudwatch_logging_arn
 }
 
 resource "aws_iam_role_policy_attachment" "pronto_api_lambda_logging" {

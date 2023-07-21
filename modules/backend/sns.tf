@@ -1,5 +1,7 @@
 resource "aws_sns_sms_preferences" "sms_preferences" {
-  default_sms_type = "Transactional"
+  default_sms_type             = "Transactional"
+  monthly_spend_limit          = 10
+  delivery_status_iam_role_arn = aws_iam_role.sns_delivery_status_role.arn
 }
 
 resource "aws_sns_topic" "bounce" {
