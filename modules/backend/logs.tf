@@ -6,3 +6,6 @@ resource "aws_cloudwatch_log_group" "pronto_api_gateway" {
 resource "aws_cloudwatch_log_group" "pronto_ecs" {
   name = "ecs"
 }
+resource "aws_cloudwatch_log_group" "pronto_reminder_lambda" {
+  name = "/aws/lambda/${aws_lambda_function.pronto_api_reminder.function_name}"
+}
