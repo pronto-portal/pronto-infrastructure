@@ -13,7 +13,9 @@ resource "aws_lambda_function" "pronto_api_reminder" {
 
   environment {
     variables = {
-      REMINDER_EMAIL = aws_ses_email_identity.pronto_reminder_email_identity.email
+      TWILIO_AUTH_TOKEN  = var.TWILIO_AUTH_TOKEN
+      TWILIO_ACCOUNT_SID = var.TWILIO_SID
+      TWILIO_PHONE       = var.TWILIO_PHONE
     }
   }
 }

@@ -39,3 +39,22 @@ variable "TOKEN_ENCRYPT_SECRET" {
   sensitive = true
   nullable  = false
 }
+
+variable "TWILIO_AUTH_TOKEN" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+
+variable "TWILIO_SID" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+
+variable "TWILIO_PHONE" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
+

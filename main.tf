@@ -69,6 +69,9 @@ module "backend" {
   ecr_image_pull_policy_arn = module.ecr.ecr_image_pull_policy_arn
   db_secret_id              = module.secrets.db_secret_id
   db_secret_version_id      = module.secrets.db_secret_version_id
+  TWILIO_AUTH_TOKEN         = var.TWILIO_AUTH_TOKEN
+  TWILIO_SID                = var.TWILIO_SID
+  TWILIO_PHONE              = var.TWILIO_PHONE
 }
 
 module "cicd" {

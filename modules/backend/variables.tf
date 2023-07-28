@@ -38,6 +38,9 @@ variable "vpc_access_policy_arn" {}
 variable "cloudwatch_logging_arn" {}
 variable "pronto_ecr_repo_url" {}
 variable "ecr_image_pull_policy_arn" {}
+variable "TWILIO_AUTH_TOKEN" {}
+variable "TWILIO_SID" {}
+variable "TWILIO_PHONE" {}
 
 variable "api_gateway_stage" {
   type    = string
