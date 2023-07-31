@@ -20,6 +20,13 @@ resource "aws_lambda_function" "pronto_api_reminder" {
   }
 }
 
+resource "aws_lambda_permission" "allow_eventbridge" {
+  statement_id  = "AllowExecutionFromEventbridgeRules"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.pronto_api_reminder.function_name
+  principal     = "events.amazonaws.com"
+}
+
 output "pronto_api_reminder_function_arn" {
   value = aws_lambda_function.pronto_api_reminder.arn
 }
