@@ -237,11 +237,3 @@ resource "aws_iam_user" "pronto_ecs_task_worker" {
 resource "aws_iam_access_key" "pronto_ecs_task_worker_key" {
   user = aws_iam_user.pronto_ecs_task_worker.name
 }
-
-output "pronto_event_rule_invoke_reminder_function_arn" {
-  value = aws_iam_role.pronto_event_rule_role.arn
-}
-
-output "pronto_ecs_task_execution_arn" {
-  value = aws_iam_role.pronto_ecs_task_execution.arn
-}

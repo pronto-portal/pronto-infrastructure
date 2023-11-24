@@ -4,11 +4,11 @@ resource "aws_codebuild_source_credential" "pronto_api_access_token" {
   token       = var.github_access_token
 }
 
-resource "aws_codebuild_project" "pronto_codebuild" {
-  name          = "pronto_codebuild"
+resource "aws_codebuild_project" "pronto_api_codebuild" {
+  name          = "pronto_api_codebuild"
   description   = "ci for pronto api"
   build_timeout = "5"
-  service_role  = aws_iam_role.codebuild_service_role.arn
+  service_role  = aws_iam_role.codebuild_backend_service_role.arn
 
   artifacts {
     type = "NO_ARTIFACTS"
@@ -24,7 +24,7 @@ resource "aws_codebuild_project" "pronto_codebuild" {
 
     environment_variable {
       name  = "REPOSITORY_URI"
-      value = var.pronto_ecr_repo_url
+      value = var.pronto_backend_ecr_repo_url
     }
 
     environment_variable {
@@ -44,17 +44,17 @@ resource "aws_codebuild_project" "pronto_codebuild" {
 
     environment_variable {
       name  = "CONTAINER_DEFINITIONS"
-      value = var.container_definitions
+      value = var.backend_container_definitions
     }
 
     environment_variable {
       name  = "ECS_SERVICE_ID"
-      value = var.ecs_service_id
+      value = var.ecs_service_backend_id
     }
 
     environment_variable {
       name  = "ECS_TASK_DEFINITION_ARN"
-      value = var.ecs_task_definition_arn
+      value = var.ecs_task_definition_backend_arn
     }
 
     environment_variable {
@@ -64,7 +64,7 @@ resource "aws_codebuild_project" "pronto_codebuild" {
 
     environment_variable {
       name  = "TASK_DEFINITION_JSON"
-      value = var.task_definition
+      value = var.task_definition_backend
     }
   }
 
@@ -99,8 +99,8 @@ resource "aws_codebuild_project" "pronto_codebuild" {
   }
 }
 
-resource "aws_codebuild_webhook" "pronto_codebuild_webhook" {
-  project_name = aws_codebuild_project.pronto_codebuild.name
+resource "aws_codebuild_webhook" "pronto_api_codebuild_webhook" {
+  project_name = aws_codebuild_project.pronto_api_codebuild.name
   build_type   = "BUILD"
 
   filter_group {

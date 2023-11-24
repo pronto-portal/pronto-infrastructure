@@ -13,9 +13,9 @@ resource "aws_lambda_function" "pronto_api_reminder" {
 
   environment {
     variables = {
-      TWILIO_AUTH_TOKEN  = var.TWILIO_AUTH_TOKEN
-      TWILIO_ACCOUNT_SID = var.TWILIO_SID
-      TWILIO_PHONE       = var.TWILIO_PHONE
+      TWILIO_AUTH_TOKEN  = local.reminder_env_secret["TWILIO_AUTH_TOKEN"]
+      TWILIO_ACCOUNT_SID = local.reminder_env_secret["TWILIO_SID"]
+      TWILIO_PHONE       = local.reminder_env_secret["TWILIO_PHONE"]
     }
   }
 }
@@ -25,8 +25,4 @@ resource "aws_lambda_permission" "allow_eventbridge" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.pronto_api_reminder.function_name
   principal     = "events.amazonaws.com"
-}
-
-output "pronto_api_reminder_function_arn" {
-  value = aws_lambda_function.pronto_api_reminder.arn
 }

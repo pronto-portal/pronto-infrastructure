@@ -45,25 +45,3 @@ resource "aws_subnet" "pronto_public_az_b" {
     Name = "public_az_b"
   }
 }
-
-output "pronto_private_az_a" {
-  value = aws_subnet.pronto_private_az_a.id
-}
-
-output "pronto_private_az_b" {
-  value = aws_subnet.pronto_private_az_b.id
-}
-
-output "private_subnet_ids" {
-  value = [
-    aws_subnet.pronto_private_az_a.id,
-    aws_subnet.pronto_private_az_b.id
-  ]
-}
-
-output "private_subnet_arns" {
-  value = [
-    aws_subnet.pronto_private_az_a.arn,
-    aws_subnet.pronto_private_az_b.arn
-  ]
-}

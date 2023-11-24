@@ -18,7 +18,8 @@ resource "aws_iam_policy" "ecr_image_pull" {
           "logs:PutLogEvents"
         ],
         "Resource" : [
-          aws_ecr_repository.pronto_ecr.arn
+          aws_ecr_repository.pronto_frontend_ecr.arn,
+          aws_ecr_repository.pronto_backend_ecr.arn
         ]
       },
       {
@@ -30,8 +31,4 @@ resource "aws_iam_policy" "ecr_image_pull" {
       }
     ]
   })
-}
-
-output "ecr_image_pull_policy_arn" {
-  value = aws_iam_policy.ecr_image_pull.arn
 }

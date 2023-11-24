@@ -28,8 +28,3 @@ resource "aws_rds_cluster_instance" "pronto_db_instance" {
   engine             = aws_rds_cluster.pronto_rds_cluster.engine
   engine_version     = aws_rds_cluster.pronto_rds_cluster.engine_version
 }
-
-output "DATABASE_URL" {
-  value     = "postgres://${aws_rds_cluster.pronto_rds_cluster.master_username}:${data.aws_secretsmanager_secret_version.rds_password.secret_string}@${aws_rds_cluster.pronto_rds_cluster.endpoint}:${aws_rds_cluster.pronto_rds_cluster.port}/${aws_rds_cluster.pronto_rds_cluster.database_name}"
-  sensitive = true
-}

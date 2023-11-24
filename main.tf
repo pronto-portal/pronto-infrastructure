@@ -54,42 +54,46 @@ module "ecr" {
 }
 
 module "backend" {
-  source                    = "./modules/backend"
-  vpc_id                    = module.networking.pronto_vpc_id
-  private_subnet_ids        = module.networking.private_subnet_ids
-  allow_all_egress_id       = module.security_groups.allow_all_egress
-  GOOGLE_CLIENT_ID          = var.GOOGLE_CLIENT_ID
-  GOOGLE_CLIENT_SECRET_ID   = var.GOOGLE_CLIENT_SECRET_ID
-  JWT_SECRET                = var.JWT_SECRET
-  REFRESH_SECRET            = var.REFRESH_SECRET
-  TOKEN_ENCRYPT_SECRET      = var.TOKEN_ENCRYPT_SECRET
-  vpc_access_policy_arn     = module.iam.vpc_access_policy_arn
-  cloudwatch_logging_arn    = module.iam.cloudwatch_logging_arn
-  pronto_ecr_repo_url       = module.ecr.repository_url
-  ecr_image_pull_policy_arn = module.ecr.ecr_image_pull_policy_arn
-  db_secret_id              = module.secrets.db_secret_id
-  db_secret_version_id      = module.secrets.db_secret_version_id
-  TWILIO_AUTH_TOKEN         = var.TWILIO_AUTH_TOKEN
-  TWILIO_SID                = var.TWILIO_SID
-  TWILIO_PHONE              = var.TWILIO_PHONE
+  source                       = "./modules/backend"
+  vpc_id                       = module.networking.pronto_vpc_id
+  private_subnet_ids           = module.networking.private_subnet_ids
+  public_subnet_ids            = module.networking.public_subnet_ids
+  allow_all_egress_id          = module.security_groups.allow_all_egress
+  api_env_vars                 = module.secrets.api_env_vars
+  reminder_env_vars            = module.secrets.reminder_env_vars
+  frontend_env_vars            = module.secrets.frontend_env_vars
+  shared_secrets               = module.secrets.shared_secrets
+  vpc_access_policy_arn        = module.iam.vpc_access_policy_arn
+  cloudwatch_logging_arn       = module.iam.cloudwatch_logging_arn
+  pronto_backend_ecr_repo_url  = module.ecr.backend_repository_url
+  pronto_frontend_ecr_repo_url = module.ecr.frontend_repository_url
+  ecr_image_pull_policy_arn    = module.ecr.ecr_image_pull_policy_arn
+  db_secret_id                 = module.secrets.db_secret_id
+  db_secret_version_id         = module.secrets.db_secret_version_id
 }
 
 module "cicd" {
-  source                           = "./modules/cicd"
-  vpc_id                           = module.networking.pronto_vpc_id
-  allow_all_egress_id              = module.security_groups.allow_all_egress
-  private_subnet_ids               = module.networking.private_subnet_ids
-  private_subnet_arns              = module.networking.private_subnet_arns
-  github_access_token              = var.github_access_token
-  pronto_ecr_repo_arn              = module.ecr.arn
-  pronto_ecr_repo_url              = module.ecr.repository_url
-  ecr_image_pull_policy_arn        = module.ecr.ecr_image_pull_policy_arn
-  pronto_api_reminder_function_arn = module.backend.pronto_api_reminder_function_arn
-  DATABASE_URL                     = module.backend.DATABASE_URL
-  container_definitions            = module.backend.container_definitions
-  ecs_service_id                   = module.backend.ecs_service_id
-  task_definition                  = module.backend.task_definition
-  ecs_task_definition_arn          = module.backend.ecs_task_definition_arn
-  ecs_cluster_arn                  = module.backend.ecs_cluster_arn
-  pronto_ecs_task_execution_arn    = module.backend.pronto_ecs_task_execution_arn
+  source                                 = "./modules/cicd"
+  vpc_id                                 = module.networking.pronto_vpc_id
+  allow_all_egress_id                    = module.security_groups.allow_all_egress
+  private_subnet_ids                     = module.networking.private_subnet_ids
+  private_subnet_arns                    = module.networking.private_subnet_arns
+  github_access_token                    = var.github_access_token
+  pronto_backend_ecr_repo_arn            = module.ecr.backend_arn
+  pronto_backend_ecr_repo_url            = module.ecr.backend_repository_url
+  ecr_image_pull_policy_arn              = module.ecr.ecr_image_pull_policy_arn
+  pronto_frontend_ecr_repo_url           = module.ecr.frontend_repository_url
+  pronto_api_reminder_function_arn       = module.backend.pronto_api_reminder_function_arn
+  DATABASE_URL                           = module.backend.DATABASE_URL
+  backend_container_definitions          = module.backend.container_definitions_backend
+  frontend_container_definitions         = module.backend.container_definitions_frontend
+  ecs_service_backend_id                 = module.backend.ecs_service_api_id
+  ecs_task_definition_backend_arn        = module.backend.ecs_task_definition_api_arn
+  ecs_service_frontend_id                = module.backend.ecs_service_frontend_id
+  ecs_task_definition_frontend_arn       = module.backend.ecs_task_definition_frontend_arn
+  pronto_ecs_task_execution_frontend_arn = module.backend.pronto_ecs_task_execution_arn
+  pronto_ecs_task_execution_backend_arn  = module.backend.pronto_ecs_task_execution_arn
+  task_definition_backend                = module.backend.task_definition_backend
+  task_definition_frontend               = module.backend.task_definition_frontend
+  ecs_cluster_arn                        = module.backend.ecs_cluster_arn
 }
