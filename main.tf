@@ -53,8 +53,8 @@ module "ecr" {
   source = "./modules/ecr"
 }
 
-module "backend" {
-  source                       = "./modules/backend"
+module "app" {
+  source                       = "./modules/app"
   vpc_id                       = module.networking.pronto_vpc_id
   private_subnet_ids           = module.networking.private_subnet_ids
   public_subnet_ids            = module.networking.public_subnet_ids
@@ -83,17 +83,17 @@ module "cicd" {
   pronto_backend_ecr_repo_url            = module.ecr.backend_repository_url
   ecr_image_pull_policy_arn              = module.ecr.ecr_image_pull_policy_arn
   pronto_frontend_ecr_repo_url           = module.ecr.frontend_repository_url
-  pronto_api_reminder_function_arn       = module.backend.pronto_api_reminder_function_arn
-  DATABASE_URL                           = module.backend.DATABASE_URL
-  backend_container_definitions          = module.backend.container_definitions_backend
-  frontend_container_definitions         = module.backend.container_definitions_frontend
-  ecs_service_backend_id                 = module.backend.ecs_service_api_id
-  ecs_task_definition_backend_arn        = module.backend.ecs_task_definition_api_arn
-  ecs_service_frontend_id                = module.backend.ecs_service_frontend_id
-  ecs_task_definition_frontend_arn       = module.backend.ecs_task_definition_frontend_arn
-  pronto_ecs_task_execution_frontend_arn = module.backend.pronto_ecs_task_execution_arn
-  pronto_ecs_task_execution_backend_arn  = module.backend.pronto_ecs_task_execution_arn
-  task_definition_backend                = module.backend.task_definition_backend
-  task_definition_frontend               = module.backend.task_definition_frontend
-  ecs_cluster_arn                        = module.backend.ecs_cluster_arn
+  pronto_api_reminder_function_arn       = module.app.pronto_api_reminder_function_arn
+  DATABASE_URL                           = module.app.DATABASE_URL
+  backend_container_definitions          = module.app.container_definitions_backend
+  frontend_container_definitions         = module.app.container_definitions_frontend
+  ecs_service_backend_id                 = module.app.ecs_service_api_id
+  ecs_task_definition_backend_arn        = module.app.ecs_task_definition_api_arn
+  ecs_service_frontend_id                = module.app.ecs_service_frontend_id
+  ecs_task_definition_frontend_arn       = module.app.ecs_task_definition_frontend_arn
+  pronto_ecs_task_execution_frontend_arn = module.app.pronto_ecs_task_execution_arn
+  pronto_ecs_task_execution_backend_arn  = module.app.pronto_ecs_task_execution_arn
+  task_definition_backend                = module.app.task_definition_backend
+  task_definition_frontend               = module.app.task_definition_frontend
+  ecs_cluster_arn                        = module.app.ecs_cluster_arn
 }
