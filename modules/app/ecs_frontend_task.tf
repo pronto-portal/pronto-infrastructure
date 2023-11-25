@@ -7,6 +7,8 @@ locals {
       "portMappings" : [
         {
           "containerPort" : 3000
+          "appProtocol" : "http",
+          "hostPort" : 3000,
         }
       ],
       "memory" : 1024,
@@ -41,6 +43,16 @@ locals {
           value : local.frontend_env_secret["NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"]
         }
       ],
+      "healthCheck" : {
+        "command" : [
+          "CMD-SHELL",
+          "curl -f http://localhost:3000 || exit 1"
+        ],
+        "interval" : 30,
+        "timeout" : 5,
+        "retries" : 3,
+        "startPeriod" : 60
+      },
       "logConfiguration" : {
         "logDriver" : "awslogs",
         "options" : {
