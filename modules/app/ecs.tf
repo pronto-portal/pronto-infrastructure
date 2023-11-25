@@ -93,7 +93,7 @@ resource "aws_ecs_service" "pronto_ui_service" {
   deployment_minimum_healthy_percent = 100
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.pronto_ui_alb_target_group.arn // create alb
+    target_group_arn = aws_lb_target_group.pronto_ui_alb_target_group.arn
     container_name   = "ui"
     container_port   = 3000
   }
