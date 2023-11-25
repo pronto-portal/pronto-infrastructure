@@ -72,7 +72,7 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
 
   source {
     type            = "GITHUB"
-    location        = "https://github.com/pronto-portal/pronto-api.git"
+    location        = "https://github.com/pronto-portal/pronto-portal.git"
     git_clone_depth = 1
     buildspec       = "buildspec.yml"
 
