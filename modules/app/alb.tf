@@ -18,7 +18,7 @@ resource "aws_lb_target_group" "pronto_ui_alb_target_group" {
 resource "aws_lb_listener" "pronto_api_alb_listener" {
   load_balancer_arn = aws_lb.pronto_ui_alb.arn
   port              = 443
-  protocol          = "TCP"
+  protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = data.aws_acm_certificate.pronto_issued_certificate.arn
 
