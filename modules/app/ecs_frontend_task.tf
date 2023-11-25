@@ -49,7 +49,7 @@ locals {
           "curl -f http://localhost:3000 || exit 1"
         ],
         "interval" : 30,
-        "timeout" : 5,
+        "timeout" : 20,
         "retries" : 3,
         "startPeriod" : 60
       },
