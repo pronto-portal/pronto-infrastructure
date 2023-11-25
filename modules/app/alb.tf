@@ -16,7 +16,7 @@ resource "aws_lb_target_group" "pronto_ui_alb_target_group" {
   target_type = "ip"
 }
 
-resource "aws_lb_listener" "pronto_api_alb_listener" {
+resource "aws_lb_listener" "pronto_ui_alb_listener" {
   load_balancer_arn = aws_lb.pronto_ui_alb.arn
   port              = 443
   protocol          = "HTTPS"
