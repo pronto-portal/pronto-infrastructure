@@ -38,6 +38,19 @@ resource "aws_security_group" "ecs_allow_inbound_nlb" {
   }
 }
 
+resource "aws_security_group" "ecs_allow_inbound_alb_ui" {
+  name        = "ecs_allow_inbound_nlb"
+  description = "Security Group for API Gateway VPC Link"
+  vpc_id      = var.vpc_id // your VPC ID
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/26"]
+  }
+}
+
 resource "aws_security_group" "ecs_allow_rds_ingress" {
   name        = "ecs_allow_rds_ingress"
   description = "Security Group for allowing RDS Traffic"

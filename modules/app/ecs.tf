@@ -102,8 +102,7 @@ resource "aws_ecs_service" "pronto_ui_service" {
     subnets = var.private_subnet_ids
     security_groups = [
       var.allow_all_egress_id,
-      aws_security_group.ecs_allow_inbound_nlb.id,
-    aws_security_group.ecs_allow_rds_ingress.id]
+    aws_security_group.ecs_allow_inbound_alb_ui.id]
     assign_public_ip = false
   }
 }
