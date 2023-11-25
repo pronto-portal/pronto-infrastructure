@@ -1,6 +1,6 @@
 resource "aws_lb" "pronto_ui_alb" {
   name               = "pronto-ui-alb"
-  internal           = true
+  internal           = false
   load_balancer_type = "application"
   subnets            = var.public_subnet_ids
 
