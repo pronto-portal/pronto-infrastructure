@@ -39,7 +39,7 @@ resource "aws_security_group" "ecs_allow_inbound_nlb" {
 }
 
 resource "aws_security_group" "ecs_allow_inbound_alb_ui" {
-  name        = "ecs_allow_inbound_nlb"
+  name        = "ecs_allow_inbound_alb_ui"
   description = "Security Group for API Gateway VPC Link"
   vpc_id      = var.vpc_id // your VPC ID
 

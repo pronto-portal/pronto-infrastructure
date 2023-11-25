@@ -121,7 +121,7 @@ locals {
         }
       ],
       "memory" : 512,
-      "cpu" : 512,
+      "cpu" : 256,
       "environment" : [
         {
           name : "NEXT_PUBLIC_API_URL",
