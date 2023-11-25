@@ -120,8 +120,8 @@ locals {
           "containerPort" : 3000
         }
       ],
-      "memory" : 512,
-      "cpu" : 256,
+      "memory" : 1024,
+      "cpu" : 512,
       "environment" : [
         {
           name : "NEXT_PUBLIC_API_URL",
