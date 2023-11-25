@@ -10,7 +10,7 @@ resource "aws_lb" "pronto_ui_alb" {
 resource "aws_lb_target_group" "pronto_ui_alb_target_group" {
   name        = "pronto-ui-alb-target-group"
   port        = 3000
-  protocol    = "TCP"
+  protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
 }
