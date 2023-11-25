@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "pronto_api_reminder" {
-  filename      = "/dev/null" # Dummy file name
+  filename      = data.archive_file.dummy_bundle.output_path
   function_name = "pronto_api_reminder"
   runtime       = "nodejs18.x"
   role          = aws_iam_role.pronto_reminder_role.arn
