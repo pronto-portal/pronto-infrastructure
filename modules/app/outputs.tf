@@ -51,3 +51,7 @@ output "task_definition_backend" {
 output "task_definition_frontend" {
   value = local.task_definition_frontend
 }
+
+output "api_gateway_url" {
+  value = aws_apigatewayv2_api.pronto_api.api_endpoint
+}

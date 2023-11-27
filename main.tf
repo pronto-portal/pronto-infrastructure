@@ -96,4 +96,7 @@ module "cicd" {
   task_definition_backend                = module.app.task_definition_backend
   task_definition_frontend               = module.app.task_definition_frontend
   ecs_cluster_arn                        = module.app.ecs_cluster_arn
+  frontend_env_vars                      = module.secrets.frontend_env_vars
+  shared_secrets                         = module.secrets.shared_secrets
+  api_gateway_url                        = module.app.api_gateway_url
 }

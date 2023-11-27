@@ -61,6 +61,26 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
       name  = "TASK_DEFINITION_JSON"
       value = var.task_definition_frontend
     }
+
+    environment_variable {
+      name  = "NEXT_PUBLIC_GOOGLE_PLACES_API_KEY"
+      value = local.NEXT_PUBLIC_GOOGLE_TRANSLATE_API_KEY
+    }
+
+    environment_variable {
+      name  = "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"
+      value = local.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    }
+
+    environment_variable {
+      name  = "NEXT_PUBLIC_GOOGLE_TRANSLATE_API_KEY"
+      value = local.NEXT_PUBLIC_GOOGLE_TRANSLATE_API_KEY
+    }
+
+    environment_variable {
+      name  = "NEXT_PUBLIC_API_URL"
+      value = local.NEXT_PUBLIC_API_URL
+    }
   }
 
   logs_config {

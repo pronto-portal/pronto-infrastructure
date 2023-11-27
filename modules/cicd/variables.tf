@@ -24,8 +24,10 @@ variable "task_definition_frontend" {}
 
 variable "ecs_cluster_arn" {}
 
+// ecr
 variable "pronto_frontend_ecr_repo_url" {}
 
+// github 
 variable "github_access_token" {
   type        = string
   description = "github access token taken from environment variables"
@@ -39,3 +41,9 @@ variable "backend_repository_name" {
   default     = "pronto-api"
 }
 
+// env vars 
+variable "frontend_env_vars" {}
+
+variable "shared_secrets" {}
+
+variable "api_gateway_url" {}
