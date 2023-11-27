@@ -18,7 +18,7 @@ resource "aws_apigatewayv2_api" "pronto_api" {
       "GET",
       "POST"
     ]
-    allow_origins = ["http://localhost:3000"]
+    allow_origins = ["https://${data.aws_acm_certificate.pronto_issued_certificate.domain}"]
   }
 }
 
