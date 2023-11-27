@@ -3,8 +3,8 @@ resource "aws_apigatewayv2_api" "pronto_api" {
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_credentials = true
-    expose_headers    = ["set-cookie", "Cookie"]
+    // allow_credentials = true
+    expose_headers = ["set-cookie", "Cookie"]
     allow_headers = [
       "set-cookie",
       "Cookie",
