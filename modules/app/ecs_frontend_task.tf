@@ -16,7 +16,7 @@ locals {
       "environment" : [
         {
           name : "NEXT_PUBLIC_API_URL",
-          value : "https://${aws_apigatewayv2_api.pronto_api.api_endpoint}"
+          value : aws_apigatewayv2_api.pronto_api.api_endpoint
         },
         {
           name : "NEXTAUTH_SECRET",
