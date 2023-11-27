@@ -18,7 +18,7 @@ resource "aws_apigatewayv2_api" "pronto_api" {
       "GET",
       "POST"
     ]
-    allow_origins = ["https://${data.aws_acm_certificate.pronto_issued_certificate.domain}"]
+    allow_origins = ["https://${data.aws_acm_certificate.pronto_issued_certificate.domain}", aws_lb.pronto_ui_alb.dns_name]
   }
 }
 

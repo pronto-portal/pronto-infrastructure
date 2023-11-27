@@ -57,6 +57,10 @@ locals {
           "value" : aws_lb.pronto_api_nlb.dns_name
         },
         {
+          "name" : "ALB_DNS",
+          "value" : aws_lb.pronto_ui_alb.dns_name
+        },
+        {
           "name" : "API_GATEWAY_DNS",
           "value" : aws_apigatewayv2_api.pronto_api.api_endpoint
         },
