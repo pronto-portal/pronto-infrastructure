@@ -53,5 +53,5 @@ output "task_definition_frontend" {
 }
 
 output "api_gateway_url" {
-  value = "${aws_apigatewayv2_api.pronto_api.api_endpoint}/${aws_apigatewayv2_stage.pronto_api_gateway_state.name}"
+  value = aws_apigatewayv2_stage.pronto_api_gateway_state.invoke_url
 }
