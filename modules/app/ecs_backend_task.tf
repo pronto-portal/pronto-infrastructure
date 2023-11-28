@@ -11,8 +11,8 @@ locals {
           "hostPort" : 4000,
         }
       ],
-      "memory" : 512,
-      "cpu" : 256,
+      "memory" : 1024,
+      "cpu" : 512,
       "environment" : [
         {
           "name" : "DATABASE_URL",
@@ -131,8 +131,8 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
   family                   = "pronto-api"
   network_mode             = "awsvpc"
   requires_compatibilities = local.requires_compatibilities // Use "FARGATE" for Fargate type
-  memory                   = 512
-  cpu                      = 256
+  memory                   = 1024
+  cpu                      = 512
 
   execution_role_arn    = aws_iam_role.pronto_ecs_task_execution.arn
   container_definitions = local.backend_container_definitions
