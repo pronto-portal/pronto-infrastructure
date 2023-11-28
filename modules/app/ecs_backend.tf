@@ -7,7 +7,7 @@ resource "aws_ecs_service" "pronto_api_service" {
   launch_type                        = "FARGATE"
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
-  health_check_grace_period_seconds  = 180
+  health_check_grace_period_seconds  = 300
 
   load_balancer {
     target_group_arn = aws_lb_target_group.pronto_api_alb_target_group.arn
