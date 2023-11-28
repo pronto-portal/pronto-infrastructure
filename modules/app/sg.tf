@@ -7,7 +7,7 @@ resource "aws_security_group" "pronto_api_vpc_link_sg" {
   #   from_port   = 4000
   #   to_port     = 4000
   #   protocol    = "tcp"
-  #   cidr_blocks = ["10.0.0.0/26"]
+  #   cidr_blocks = ["10.0.0.0/27"]
   # }
 
   # ingress {
@@ -47,7 +47,21 @@ resource "aws_security_group" "ecs_allow_inbound_nlb" {
     from_port   = 4000
     to_port     = 4000
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/26"]
+    cidr_blocks = ["10.0.0.0/27"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/27"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/27"]
   }
 }
 
@@ -117,14 +131,14 @@ resource "aws_security_group" "ecs_allow_rds_ingress" {
     from_port   = 4000
     to_port     = 4000
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/26"]
+    cidr_blocks = ["10.0.0.0/27"]
   }
 
   egress {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/26"]
+    cidr_blocks = ["10.0.0.0/27"]
   }
 }
 
