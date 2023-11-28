@@ -6,7 +6,9 @@ locals {
       "essential" : true,
       "portMappings" : [
         {
-          "containerPort" : 4000
+          "containerPort" : 4000,
+          "appProtocol" : "http",
+          "hostPort" : 4000,
         }
       ],
       "memory" : 512,
@@ -93,6 +95,13 @@ locals {
           "value" : local.api_env_secret["GOOGLE_TRANSLATE_API_KEY"]
         }
       ],
+      "healthCheck" : {
+        "command" : ["CMD-SHELL", "curl", "-f", "http://localhost:4000/graphql", "||", "exit", "1"],
+        "interval" : 30,
+        "timeout" : 20,
+        "retries" : 3,
+        "startPeriod" : 240
+      },
       "logConfiguration" : {
         "logDriver" : "awslogs",
         "options" : {
