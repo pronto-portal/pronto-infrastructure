@@ -38,8 +38,8 @@ resource "aws_security_group" "pronto_api_vpc_link_sg" {
   }
 }
 
-resource "aws_security_group" "ecs_allow_inbound_nlb" {
-  name        = "ecs_allow_inbound_nlb"
+resource "aws_security_group" "ecs_allow_inbound_alb" {
+  name        = "ecs_allow_inbound_alb"
   description = "Security Group for API Gateway VPC Link"
   vpc_id      = var.vpc_id // your VPC ID
 

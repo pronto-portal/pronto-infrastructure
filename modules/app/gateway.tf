@@ -23,8 +23,8 @@ resource "aws_apigatewayv2_api" "pronto_api" {
   }
 }
 
-resource "aws_apigatewayv2_vpc_link" "pronto_api_nlb_vpc_link" {
-  name               = "pronto-api-nlb-vpc-link"
+resource "aws_apigatewayv2_vpc_link" "pronto_api_alb_vpc_link" {
+  name               = "pronto-api-alb-vpc-link"
   subnet_ids         = var.private_subnet_ids
   security_group_ids = [aws_security_group.pronto_api_vpc_link_sg.id]
 }
@@ -59,8 +59,8 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
 
   connection_type      = "VPC_LINK"
   integration_method   = "ANY"
-  integration_uri      = aws_lb_listener.pronto_api_nlb_listener.arn
-  connection_id        = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
+  integration_uri      = aws_lb_listener.pronto_api_alb_listener.arn
+  connection_id        = aws_apigatewayv2_vpc_link.pronto_api_alb_vpc_link.id
   passthrough_behavior = "WHEN_NO_MATCH"
 }
 

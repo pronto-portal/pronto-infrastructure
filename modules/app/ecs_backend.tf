@@ -9,7 +9,7 @@ resource "aws_ecs_service" "pronto_api_service" {
   deployment_minimum_healthy_percent = 100
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.pronto_api_nlb_target_group.arn
+    target_group_arn = aws_lb_target_group.pronto_api_alb_target_group.arn
     container_name   = "api"
     container_port   = 4000
   }
@@ -18,7 +18,7 @@ resource "aws_ecs_service" "pronto_api_service" {
     subnets = var.private_subnet_ids
     security_groups = [
       var.allow_all_egress_id,
-      aws_security_group.ecs_allow_inbound_nlb.id,
+      aws_security_group.ecs_allow_inbound_alb.id,
     aws_security_group.ecs_allow_rds_ingress.id]
     assign_public_ip = false
   }

@@ -54,7 +54,7 @@ locals {
         },
         {
           "name" : "LOAD_BALANCER_DNS",
-          "value" : aws_lb.pronto_api_nlb.dns_name
+          "value" : aws_lb.pronto_api_alb.dns_name
         },
         {
           "name" : "ALB_DNS",
