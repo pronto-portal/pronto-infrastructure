@@ -3,6 +3,7 @@ resource "aws_lb" "pronto_api_nlb" {
   internal           = true
   load_balancer_type = "network"
   subnets            = var.private_subnet_ids
+  security_groups    = [aws_security_group.alb_sg.id]
 
   enable_deletion_protection = false
 }
