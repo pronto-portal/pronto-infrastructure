@@ -65,7 +65,7 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
 
 resource "aws_apigatewayv2_route" "graphql" {
   api_id    = aws_apigatewayv2_api.pronto_api.id
-  route_key = "ANY /graphql"
+  route_key = "ANY /{proxy+}"
 
   target = "integrations/${aws_apigatewayv2_integration.pronto_api_graphql_integration.id}"
 }
