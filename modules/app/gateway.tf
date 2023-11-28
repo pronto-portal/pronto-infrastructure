@@ -18,9 +18,10 @@ resource "aws_apigatewayv2_api" "pronto_api" {
       "GET",
       "POST"
     ]
-    allow_origins = ["https://${data.aws_acm_certificate.pronto_issued_certificate.domain}", "https://${aws_lb.pronto_ui_alb.dns_name}", "http://localhost:3000"]
+    allow_origins = ["http://localhost:3000"]
   }
 }
+// "https://${data.aws_acm_certificate.pronto_issued_certificate.domain}", "https://${aws_lb.pronto_ui_alb.dns_name}", "http://localhost:3000"
 
 resource "aws_apigatewayv2_vpc_link" "pronto_api_nlb_vpc_link" {
   name               = "pronto-api-nlb-vpc-link"
@@ -46,7 +47,6 @@ resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
       "protocol" : "$context.protocol",
       "responseLength" : "$context.responseLength",
       "error" : "$context.error.message",
-      "error.responseType" : "$context.error.responseType",
       "integrationError" : "$context.integrationErrorMessage",
       "integrationStatus" : "$context.integration.status"
     })
@@ -57,15 +57,16 @@ resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
   integration_type = "HTTP_PROXY"
 
-  connection_type    = "VPC_LINK"
-  integration_method = "ANY"
-  integration_uri    = aws_lb_listener.pronto_api_nlb_listener.arn
-  connection_id      = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
+  connection_type      = "VPC_LINK"
+  integration_method   = "ANY"
+  integration_uri      = aws_lb_listener.pronto_api_nlb_listener.arn
+  connection_id        = aws_apigatewayv2_vpc_link.pronto_api_nlb_vpc_link.id
+  passthrough_behavior = "WHEN_NO_MATCH"
 }
 
-resource "aws_apigatewayv2_route" "default_route" {
+resource "aws_apigatewayv2_route" "graphql" {
   api_id    = aws_apigatewayv2_api.pronto_api.id
-  route_key = "$default" // "ANY /graphql"
+  route_key = "ANY /graphql"
 
   target = "integrations/${aws_apigatewayv2_integration.pronto_api_graphql_integration.id}"
 }
