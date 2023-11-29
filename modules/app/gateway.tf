@@ -2,25 +2,25 @@ resource "aws_apigatewayv2_api" "pronto_api" {
   name          = "pronto-api"
   protocol_type = "HTTP"
 
-  cors_configuration {
-    allow_credentials = true
-    expose_headers    = ["set-cookie", "Cookie"]
-    allow_headers = [
-      "set-cookie",
-      "Cookie",
-      "Content-Type",
-      "Origin",
-      "Accept",
-      "X-XSS-Protection",
-      "Authorization",
-    ]
-    allow_methods = [
-      "GET",
-      "POST",
-      "OPTIONS"
-    ]
-    allow_origins = ["https://${data.aws_acm_certificate.pronto_issued_certificate.domain}", "https://${aws_lb.pronto_ui_alb.dns_name}", "http://localhost:3000"]
-  }
+  # cors_configuration {
+  #   allow_credentials = true
+  #   expose_headers    = ["set-cookie", "Cookie"]
+  #   allow_headers = [
+  #     "set-cookie",
+  #     "Cookie",
+  #     "Content-Type",
+  #     "Origin",
+  #     "Accept",
+  #     "X-XSS-Protection",
+  #     "Authorization",
+  #   ]
+  #   allow_methods = [
+  #     "GET",
+  #     "POST",
+  #     "OPTIONS"
+  #   ]
+  #   allow_origins = ["https://${data.aws_acm_certificate.pronto_issued_certificate.domain}", "https://${aws_lb.pronto_ui_alb.dns_name}", "http://localhost:3000"]
+  # }
 }
 
 resource "aws_apigatewayv2_vpc_link" "pronto_api_alb_vpc_link" {
