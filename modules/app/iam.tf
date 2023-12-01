@@ -264,7 +264,12 @@ resource "aws_iam_role_policy" "ecs_exec_policy" {
     Statement = [
       {
         Action = [
-          "ecs:ExecuteCommand"
+          "ecs:ExecuteCommand",
+          "ssm:UpdateInstanceInformation",
+          "ssmmessages:CreateControlChannel",
+          "ssmmessages:CreateDataChannel",
+          "ssmmessages:OpenControlChannel",
+          "ssmmessages:OpenDataChannel"
         ],
         Resource = "*",
         Effect   = "Allow"
