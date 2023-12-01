@@ -122,6 +122,7 @@ locals {
     "memory" : aws_ecs_task_definition.pronto-api-task.memory,
     "cpu" : aws_ecs_task_definition.pronto-api-task.cpu,
     "executionRoleArn" : aws_ecs_task_definition.pronto-api-task.execution_role_arn,
+    "taskRoleArn" : local.task_role_arn,
     "containerDefinitions" : local.backend_decoded_container_definitions,
     "runtimePlatform" : local.runtime_platform
   })
@@ -131,11 +132,11 @@ resource "aws_ecs_task_definition" "pronto-api-task" {
   family                   = "pronto-api"
   network_mode             = "awsvpc"
   requires_compatibilities = local.requires_compatibilities // Use "FARGATE" for Fargate type
+  task_role_arn            = local.task_role_arn
   memory                   = 1024
   cpu                      = 512
-
-  execution_role_arn    = aws_iam_role.pronto_ecs_task_execution.arn
-  container_definitions = local.backend_container_definitions
+  execution_role_arn       = aws_iam_role.pronto_ecs_task_execution.arn
+  container_definitions    = local.backend_container_definitions
 
   runtime_platform {
     operating_system_family = local.operating_system_family // "LINUX"

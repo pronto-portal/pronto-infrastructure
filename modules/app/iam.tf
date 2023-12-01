@@ -237,3 +237,38 @@ resource "aws_iam_user" "pronto_ecs_task_worker" {
 resource "aws_iam_access_key" "pronto_ecs_task_worker_key" {
   user = aws_iam_user.pronto_ecs_task_worker.name
 }
+
+resource "aws_iam_role" "ecs_task_exec_role" {
+  name = "ecs_task_exec_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy" "ecs_exec_policy" {
+  name = "ecs_exec_policy"
+  role = aws_iam_role.ecs_task_exec_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = [
+          "ecs:ExecuteCommand"
+        ],
+        Resource = "*",
+        Effect   = "Allow"
+      }
+    ]
+  })
+}

@@ -69,6 +69,7 @@ locals {
     "memory" : aws_ecs_task_definition.pronto-ui-task.memory,
     "cpu" : aws_ecs_task_definition.pronto-ui-task.cpu,
     "executionRoleArn" : aws_ecs_task_definition.pronto-ui-task.execution_role_arn,
+    "taskRoleArn" : local.task_role_arn,
     "containerDefinitions" : local.frontend_decoded_container_definitions,
     "runtimePlatform" : local.runtime_platform
   })
@@ -82,6 +83,7 @@ resource "aws_ecs_task_definition" "pronto-ui-task" {
   cpu                      = 512
 
   execution_role_arn    = aws_iam_role.pronto_ecs_task_execution.arn
+  task_role_arn         = local.task_role_arn
   container_definitions = local.frontend_container_definitions
 
   runtime_platform {

@@ -12,6 +12,7 @@ locals {
   requires_compatibilities = ["FARGATE"]
   operating_system_family  = "LINUX"
   cpu_architecture         = "X86_64"
+  task_role_arn            = aws_iam_role.ecs_task_exec_role.arn
 
   runtime_platform = {
     operatingSystemFamily = local.operating_system_family
