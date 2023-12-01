@@ -83,7 +83,8 @@ resource "aws_iam_role" "codebuild_backend_service_role" {
 
         {
           Action = [
-            "ecs:UpdateService"
+            "ecs:UpdateService",
+            "ecs:DescribeServices"
           ]
 
           Effect = "Allow"
@@ -155,7 +156,8 @@ resource "aws_iam_role" "codebuild_frontend_service_role" {
       Statement = [
         {
           Action = [
-            "ecs:UpdateService"
+            "ecs:UpdateService",
+            "ecs:DescribeServices"
           ]
 
           Effect = "Allow"
