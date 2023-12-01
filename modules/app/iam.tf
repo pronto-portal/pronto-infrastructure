@@ -267,10 +267,16 @@ resource "aws_iam_role_policy" "ecs_exec_policy" {
           "ssmmessages:CreateControlChannel",
           "ssmmessages:CreateDataChannel",
           "ssmmessages:OpenControlChannel",
-          "ssmmessages:OpenDataChannel",
-
+          "ssmmessages:OpenDataChannel"
         ],
         Resource = "*",
+        Effect   = "Allow"
+      },
+      {
+        Action = [
+          "kms:Decrypt",
+        ],
+        Resource = aws_kms_key.pronto-ecs-kms.arn,
         Effect   = "Allow"
       }
     ]
