@@ -8,6 +8,7 @@ resource "aws_ecs_service" "pronto_ui_service" {
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
   health_check_grace_period_seconds  = 360
+  enable_execute_command             = true
 
   load_balancer {
     target_group_arn = aws_lb_target_group.pronto_ui_alb_target_group.arn

@@ -96,11 +96,11 @@ locals {
         }
       ],
       "healthCheck" : {
-        "command" : ["CMD-SHELL", "curl", "-f", "http://localhost:4000/graphql", "||", "exit", "1"],
+        "command" : ["CMD-SHELL", "curl", "-f", "http://localhost:4000/graphql"],
         "interval" : 30,
         "timeout" : 20,
         "retries" : 3,
-        "startPeriod" : 240
+        "startPeriod" : 60
       },
       "logConfiguration" : {
         "logDriver" : "awslogs",
