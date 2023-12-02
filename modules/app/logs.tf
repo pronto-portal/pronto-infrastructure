@@ -5,7 +5,7 @@ resource "aws_cloudwatch_log_group" "pronto_api_gateway" {
 
 resource "aws_cloudwatch_log_group" "pronto_ecs" {
   name       = "ecs"
-  kms_key_id = aws_kms_key.pronto-ecs-kms.key_id
+  kms_key_id = aws_kms_key.pronto-ecs-kms.arn
 }
 resource "aws_cloudwatch_log_group" "pronto_reminder_lambda" {
   name = "/aws/lambda/${aws_lambda_function.pronto_api_reminder.function_name}"
