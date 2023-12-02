@@ -3,7 +3,7 @@ resource "aws_ecs_service" "pronto_ui_service" {
   cluster                            = aws_ecs_cluster.pronto-cluster.arn
   task_definition                    = aws_ecs_task_definition.pronto-ui-task.arn
   desired_count                      = 1
-  force_new_deployment               = true
+  force_new_deployment               = false
   launch_type                        = "FARGATE"
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
