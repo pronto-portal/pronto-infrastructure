@@ -91,6 +91,7 @@ module "cicd" {
   ecs_task_definition_backend_arn        = module.app.ecs_task_definition_api_arn
   ecs_service_frontend_id                = module.app.ecs_service_frontend_id
   ecs_task_definition_frontend_arn       = module.app.ecs_task_definition_frontend_arn
+  ecs_task_exec_role_arn                 = module.app.ecs_task_exec_role_arn
   pronto_ecs_task_execution_frontend_arn = module.app.pronto_ecs_task_execution_arn
   pronto_ecs_task_execution_backend_arn  = module.app.pronto_ecs_task_execution_arn
   task_definition_backend                = module.app.task_definition_backend

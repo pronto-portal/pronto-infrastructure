@@ -55,3 +55,7 @@ output "task_definition_frontend" {
 output "api_gateway_url" {
   value = aws_apigatewayv2_stage.pronto_api_gateway_state.invoke_url
 }
+
+output "ecs_task_exec_role_arn" {
+  value = aws_iam_role.ecs_task_exec_role.arn
+}

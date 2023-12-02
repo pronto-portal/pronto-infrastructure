@@ -23,6 +23,7 @@ variable "task_definition_backend" {}
 variable "task_definition_frontend" {}
 
 variable "ecs_cluster_arn" {}
+variable "ecs_task_exec_role_arn" {}
 
 // ecr
 variable "pronto_frontend_ecr_repo_url" {}
