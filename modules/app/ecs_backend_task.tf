@@ -96,7 +96,7 @@ locals {
         }
       ],
       "healthCheck" : {
-        "command" : ["CMD-SHELL", "curl", "-f", "http://localhost:4000/graphql"],
+        "command" : ["CMD-SHELL", "curl -s --fail http://localhost:4000 || exit 1"],
         "interval" : 30,
         "timeout" : 20,
         "retries" : 3,

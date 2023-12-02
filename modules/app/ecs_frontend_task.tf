@@ -44,7 +44,7 @@ locals {
         }
       ],
       "healthCheck" : {
-        "command" : ["CMD-SHELL", "curl", "-f", "http://localhost:3000"],
+        "command" : ["CMD-SHELL", "curl -s --fail http://localhost:3000 || exit 1"],
         "interval" : 30,
         "timeout" : 20,
         "retries" : 3,
