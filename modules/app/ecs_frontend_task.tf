@@ -24,7 +24,7 @@ locals {
         },
         {
           name : "NEXTAUTH_URL",
-          value : data.aws_acm_certificate.pronto_issued_certificate.domain
+          value : "https://${data.aws_acm_certificate.pronto_issued_certificate.domain}"
         },
         {
           name : "GOOGLE_CLIENT_ID",
