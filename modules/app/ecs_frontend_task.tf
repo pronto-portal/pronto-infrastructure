@@ -44,7 +44,7 @@ locals {
         }
       ],
       "healthCheck" : {
-        "command" : ["CMD-SHELL", "curl -f http://localhost/ || exit 1"],
+        "command" : ["CMD-SHELL", "/app/healthcheck.sh"],
         "interval" : 30,
         "timeout" : 20,
         "retries" : 3,
