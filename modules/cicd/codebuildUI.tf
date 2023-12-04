@@ -81,6 +81,11 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
       name  = "NEXT_PUBLIC_API_URL"
       value = local.NEXT_PUBLIC_API_URL
     }
+
+    environment_variable {
+      name  = "NEXTAUTH_URL_INTERNAL"
+      value = var.ui_alb_url
+    }
   }
 
   logs_config {

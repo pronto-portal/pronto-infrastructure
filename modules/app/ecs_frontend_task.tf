@@ -1,4 +1,5 @@
 locals {
+  ui_alb_url = "https://${aws_lb.pronto_ui_alb.dns_name}"
   frontend_decoded_container_definitions = [
     {
       "name" : "ui",
@@ -25,6 +26,10 @@ locals {
         {
           name : "NEXTAUTH_URL",
           value : "https://${data.aws_acm_certificate.pronto_issued_certificate.domain}"
+        },
+        {
+          name : "NEXTAUTH_URL_INTERNAL",
+          value : "https://${aws_lb.pronto_ui_alb.dns_name}"
         },
         {
           name : "GOOGLE_CLIENT_ID",

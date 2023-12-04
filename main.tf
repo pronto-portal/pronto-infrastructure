@@ -100,4 +100,5 @@ module "cicd" {
   frontend_env_vars                      = module.secrets.frontend_env_vars
   shared_secrets                         = module.secrets.shared_secrets
   api_gateway_url                        = module.app.api_gateway_url
+  ui_alb_url                             = module.app.ui_alb_url
 }
