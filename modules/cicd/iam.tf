@@ -110,7 +110,8 @@ resource "aws_iam_role" "codebuild_backend_service_role" {
 
           Effect = "Allow"
           Resource = [
-            var.pronto_ecs_task_execution_backend_arn
+            var.pronto_ecs_task_execution_backend_arn,
+            var.ecs_task_exec_role_arn
           ]
         },
         {
