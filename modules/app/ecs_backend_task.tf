@@ -100,7 +100,7 @@ locals {
         "interval" : 30,
         "timeout" : 20,
         "retries" : 3,
-        "startPeriod" : 60
+        "startPeriod" : 600
       },
       "logConfiguration" : {
         "logDriver" : "awslogs",
