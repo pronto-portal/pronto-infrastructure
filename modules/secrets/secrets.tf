@@ -18,8 +18,8 @@ data "aws_secretsmanager_secret" "api_env_vars" {
 }
 
 data "aws_secretsmanager_secret_version" "api_env_vars_version" {
-  secret_id     = "dab7fd14-5473-42a5-8d60-5d71f14ed20e" //data.aws_secretsmanager_secret.api_env_vars.id
-  version_stage = "AWSCURRENT"
+  secret_id = "dab7fd14-5473-42a5-8d60-5d71f14ed20e" //data.aws_secretsmanager_secret.api_env_vars.id
+  //version_stage = "AWSCURRENT"
 }
 
 data "aws_secretsmanager_secret" "reminder_env_vars" {
