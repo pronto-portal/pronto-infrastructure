@@ -101,4 +101,5 @@ module "cicd" {
   shared_secrets                         = module.secrets.shared_secrets
   api_gateway_url                        = module.app.api_gateway_url
   ui_alb_url                             = module.app.ui_alb_url
+  ui_domain_name                         = module.app.ui_domain_name
 }

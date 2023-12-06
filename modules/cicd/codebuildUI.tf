@@ -56,7 +56,6 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
       name  = "ECS_CLUSTER_ARN"
       value = var.ecs_cluster_arn
     }
-
     environment_variable {
       name  = "TASK_DEFINITION_JSON"
       value = var.task_definition_frontend
@@ -77,6 +76,10 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
       value = local.NEXT_PUBLIC_GOOGLE_TRANSLATE_API_KEY
     }
 
+    environment_variable {
+      name  = "NEXT_PRIVATE_API_URL"
+      value = local.NEXT_PRIVATE_API_URL
+    }
     environment_variable {
       name  = "NEXT_PUBLIC_API_URL"
       value = local.NEXT_PUBLIC_API_URL

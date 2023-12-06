@@ -63,3 +63,7 @@ output "ecs_task_exec_role_arn" {
 output "ui_alb_url" {
   value = local.ui_alb_url
 }
+
+output "ui_domain_name" {
+  value = data.aws_acm_certificate.pronto_issued_certificate.domain
+}

@@ -26,7 +26,7 @@ variable "ecs_cluster_arn" {}
 variable "ecs_task_exec_role_arn" {}
 
 variable "ui_alb_url" {}
-
+variable "ui_domain_name" {}
 // ecr
 variable "pronto_frontend_ecr_repo_url" {}
 
