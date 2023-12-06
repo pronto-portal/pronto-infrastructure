@@ -77,8 +77,8 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
     }
 
     environment_variable {
-      name  = "NEXT_PRIVATE_API_URL"
-      value = local.NEXT_PRIVATE_API_URL
+      name  = "NEXT_PUBLIC_PRIVATE_API_URL"
+      value = local.NEXT_PUBLIC_PRIVATE_API_URL
     }
     environment_variable {
       name  = "NEXT_PUBLIC_API_URL"
