@@ -30,10 +30,10 @@ resource "aws_apigatewayv2_vpc_link" "pronto_api_alb_vpc_link" {
 }
 
 resource "aws_apigatewayv2_domain_name" "pronto_api_domain" {
-  domain_name = "api.${data.aws_acm_certificate.pronto_issued_certificate.domain}"
+  domain_name = data.aws_acm_certificate.pronto_api_issued_certificate.domain
 
   domain_name_configuration {
-    certificate_arn = data.aws_acm_certificate.pronto_issued_certificate.arn
+    certificate_arn = data.aws_acm_certificate.pronto_api_issued_certificate.arn
     endpoint_type   = "REGIONAL"
     security_policy = "TLS_1_2"
   }
