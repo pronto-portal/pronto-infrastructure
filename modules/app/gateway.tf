@@ -29,7 +29,17 @@ resource "aws_apigatewayv2_vpc_link" "pronto_api_alb_vpc_link" {
   security_group_ids = [aws_security_group.pronto_api_vpc_link_sg.id]
 }
 
-resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
+resource "aws_apigatewayv2_domain_name" "pronto_api_domain" {
+  domain_name = "api.${data.aws_acm_certificate.pronto_issued_certificate.domain}"
+
+  domain_name_configuration {
+    certificate_arn = data.aws_acm_certificate.pronto_issued_certificate.arn
+    endpoint_type   = "REGIONAL"
+    security_policy = "TLS_1_2"
+  }
+}
+
+resource "aws_apigatewayv2_stage" "pronto_api_gateway_stage" {
   api_id      = aws_apigatewayv2_api.pronto_api.id
   name        = var.api_gateway_stage
   auto_deploy = true
@@ -53,6 +63,11 @@ resource "aws_apigatewayv2_stage" "pronto_api_gateway_state" {
   }
 }
 
+resource "aws_apigatewayv2_api_mapping" "pronto_api_domain_mapping" {
+  api_id      = aws_apigatewayv2_api.pronto_api.id
+  domain_name = aws_apigatewayv2_domain_name.pronto_api_domain.id
+  stage       = aws_apigatewayv2_stage.pronto_api_gateway_stage.id
+}
 resource "aws_apigatewayv2_integration" "pronto_api_graphql_integration" {
   api_id           = aws_apigatewayv2_api.pronto_api.id
   integration_type = "HTTP_PROXY"

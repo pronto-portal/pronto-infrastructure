@@ -68,7 +68,7 @@ locals {
         },
         {
           "name" : "API_GATEWAY_URL",
-          "value" : aws_apigatewayv2_stage.pronto_api_gateway_state.invoke_url
+          "value" : aws_apigatewayv2_stage.pronto_api_gateway_stage.invoke_url
         },
         {
           "name" : "AWS_ACCESS_KEY_ID",
