@@ -6,6 +6,5 @@ locals {
   NEXT_PUBLIC_GOOGLE_TRANSLATE_API_KEY = local.shared_secrets["GOOGLE_TRANSLATE_API_KEY"]
   NEXT_PUBLIC_GOOGLE_PLACES_API_KEY    = local.shared_secrets["GOOGLE_PLACES_API_KEY"]
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY   = local.frontend_env_secret["NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY"]
-  NEXT_PUBLIC_PRIVATE_API_URL          = var.api_gateway_url
-  NEXT_PUBLIC_API_URL                  = "https://${var.ui_domain_name}/api"
+  NEXT_PUBLIC_API_URL                  = var.api_gateway_url
 }
