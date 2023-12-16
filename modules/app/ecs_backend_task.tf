@@ -97,6 +97,18 @@ locals {
         {
           "name" : "GOOGLE_TRANSLATE_API_KEY",
           "value" : local.api_env_secret["GOOGLE_TRANSLATE_API_KEY"]
+        },
+        {
+          "name" : "TWILIO_SID",
+          "value" : local.reminder_env_secret["TWILIO_SID"]
+        },
+        {
+          "name" : "TWILIO_AUTH_TOKEN",
+          "value" : local.reminder_env_secret["TWILIO_AUTH_TOKEN"]
+        },
+        {
+          "name" : "TWILIO_PHONE",
+          "value" : local.reminder_env_secret["TWILIO_PHONE"]
         }
       ],
       "healthCheck" : {
