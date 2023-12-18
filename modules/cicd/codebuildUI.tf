@@ -63,7 +63,7 @@ resource "aws_codebuild_project" "pronto_ui_codebuild" {
 
     environment_variable {
       name  = "NEXT_PUBLIC_GOOGLE_PLACES_API_KEY"
-      value = local.NEXT_PUBLIC_GOOGLE_TRANSLATE_API_KEY
+      value = local.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY
     }
 
     environment_variable {
