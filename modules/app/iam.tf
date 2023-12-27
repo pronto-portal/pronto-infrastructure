@@ -43,6 +43,9 @@ resource "aws_iam_policy" "pronto_ecs_task_create_events" {
           "events:PutTargets",
           "events:DeleteRule",
           "events:RemoveTargets",
+          "events:ListTargetsByRule",
+          "events:describeRule",
+          "events:ListRules"
         ]
         Effect   = "Allow"
         Resource = "*"
