@@ -18,7 +18,7 @@ resource "aws_lb_target_group" "pronto_api_alb_target_group" {
   health_check {
     path                = "/healthcheck"
     interval            = 30
-    timeout             = 30
+    timeout             = 20
     healthy_threshold   = 5
     unhealthy_threshold = 3
     matcher             = "200,204"
