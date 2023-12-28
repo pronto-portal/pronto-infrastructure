@@ -14,6 +14,15 @@ resource "aws_lb_target_group" "pronto_api_alb_target_group" {
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
+
+  health_check {
+    path                = "/healthcheck"
+    interval            = 30
+    timeout             = 30
+    healthy_threshold   = 5
+    unhealthy_threshold = 3
+    matcher             = "200,204"
+  }
 }
 
 resource "aws_lb_listener" "pronto_api_alb_listener" {
