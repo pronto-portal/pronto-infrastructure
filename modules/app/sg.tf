@@ -108,7 +108,7 @@ resource "aws_security_group" "api_ecs_service_sg" {
     from_port       = 4000
     to_port         = 4000
     protocol        = "tcp"
-    security_groups = ["0.0.0.0/0"] //todo: lock down cidrs
+    security_groups = [aws_security_group.pronto_api_vpc_link_sg.id]
   }
 
   egress {
