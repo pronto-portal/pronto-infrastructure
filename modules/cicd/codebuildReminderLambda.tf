@@ -75,7 +75,12 @@ resource "aws_codebuild_webhook" "pronto_reminder_codebuild_webhook" {
   filter_group {
     filter {
       type    = "EVENT"
-      pattern = "PUSH,PULL_REQUEST_MERGED"
+      pattern = "PULL_REQUEST_MERGED"
+    }
+
+    filter {
+      type    = "BASE_REF"
+      pattern = "refs/heads/master"
     }
   }
 }
