@@ -80,6 +80,22 @@ resource "aws_iam_role" "pronto_reminder_role" {
 resource "aws_iam_role" "pronto_reminder_rule" {
   name               = "pronto_reminder_rule"
   assume_role_policy = data.aws_iam_policy_document.pronto_reminder_rule.json
+  inline_policy {
+    name = "pronto_reminder_rule_policy"
+    policy = jsonencode({
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Action = [
+            "events:DeleteRule",
+          ]
+          Effect   = "Allow"
+          Resource = "*"
+        },
+
+      ]
+    })
+  }
 }
 
 resource "aws_iam_role" "pronto_ecs_task_execution" {
