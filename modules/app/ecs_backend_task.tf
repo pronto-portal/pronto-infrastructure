@@ -109,6 +109,10 @@ locals {
         {
           "name" : "TWILIO_PHONE",
           "value" : local.reminder_env_secret["TWILIO_PHONE"]
+        },
+        {
+          "name" : "NODE_ENV",
+          "value" : "production"
         }
       ],
       "healthCheck" : {
