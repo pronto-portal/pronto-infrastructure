@@ -75,11 +75,6 @@ resource "aws_iam_policy" "pronto_event_rule_invoke_reminder_function" {
 resource "aws_iam_role" "pronto_reminder_role" {
   name               = "pronto_reminder_role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_lambda.json
-}
-
-resource "aws_iam_role" "pronto_reminder_rule" {
-  name               = "pronto_reminder_rule"
-  assume_role_policy = data.aws_iam_policy_document.pronto_reminder_rule.json
   inline_policy {
     name = "pronto_reminder_rule_policy"
     policy = jsonencode({
@@ -96,6 +91,12 @@ resource "aws_iam_role" "pronto_reminder_rule" {
       ]
     })
   }
+}
+
+resource "aws_iam_role" "pronto_reminder_rule" {
+  name               = "pronto_reminder_rule"
+  assume_role_policy = data.aws_iam_policy_document.pronto_reminder_rule.json
+
 }
 
 resource "aws_iam_role" "pronto_ecs_task_execution" {
