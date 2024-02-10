@@ -17,7 +17,8 @@ resource "aws_apigatewayv2_api" "pronto_api" {
       "X-Requested-With",
       "Content-MD5",
       "Date",
-      "X-Api-Version"
+      "X-Api-Version",
+      "X-Timezone"
     ]
     allow_methods = [
       "GET",
