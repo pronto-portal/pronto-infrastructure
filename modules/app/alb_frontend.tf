@@ -29,22 +29,18 @@ resource "aws_lb_listener" "pronto_ui_alb_listener" {
   }
 }
 
-resource "aws_lb_listener_rule" "http_to_https" {
-  listener_arn = aws_lb_listener.pronto_ui_alb_listener.arn
-  priority     = 1
-  action {
+resource "aws_lb_listener" "pronto_ui_alb_http_redirect_listener" {
+  load_balancer_arn = aws_lb.pronto_ui_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
     type = "redirect"
+
     redirect {
       port        = "443"
       protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
   }
-
-  condition {
-    path_pattern {
-      values = ["/*"]
-    }
-  }
-
 }
