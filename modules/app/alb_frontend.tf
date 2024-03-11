@@ -28,3 +28,23 @@ resource "aws_lb_listener" "pronto_ui_alb_listener" {
     target_group_arn = aws_lb_target_group.pronto_ui_alb_target_group.arn
   }
 }
+
+resource "aws_lb_listener_rule" "http_to_https" {
+  listener_arn = aws_lb_listener.pronto_ui_alb_listener.arn
+  priority     = 1
+  action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  condition {
+    path_pattern {
+      values = ["/*"]
+    }
+  }
+
+}
