@@ -5,6 +5,7 @@ variable "vpc_id" {}
 variable "db_secret_id" {}
 variable "db_secret_version_id" {}
 variable "public_ip" {}
+variable "bastion_key_string_pem" {}
 
 variable "api_env_vars" {}
 variable "reminder_env_vars" {}

@@ -71,6 +71,7 @@ module "app" {
   db_secret_id                 = module.secrets.db_secret_id
   db_secret_version_id         = module.secrets.db_secret_version_id
   public_ip                    = var.public_ip
+  bastion_key_string_pem       = var.bastion_key_string_pem
 }
 
 module "cicd" {

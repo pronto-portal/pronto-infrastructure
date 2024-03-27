@@ -61,3 +61,9 @@ variable "TWILIO_PHONE" {
 variable "public_ip" {
   type = string
 }
+
+variable "bastion_key_string_pem" {
+  type      = string
+  sensitive = true
+  nullable  = false
+}
