@@ -31,12 +31,12 @@ resource "aws_rds_cluster_instance" "pronto_db_instance" {
   engine_version     = aws_rds_cluster.pronto_rds_cluster.engine_version
 }
 
-# // bastion to connect to rds
-# resource "aws_instance" "rds_bastion" {
-#   ami                         = "ami-033a1ebf088e56e81"
-#   instance_type               = "t2.micro"
-#   key_name                    = "dev"
-#   subnet_id                   = var.public_subnet_ids[0]
-#   vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
-#   associate_public_ip_address = true
-# }
+// bastion to connect to rds
+resource "aws_instance" "rds_bastion" {
+  ami                         = "ami-0c101f26f147fa7fd"
+  instance_type               = "t2.micro"
+  key_name                    = "dev"
+  subnet_id                   = var.public_subnet_ids[0]
+  vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
+  associate_public_ip_address = true
+}
