@@ -119,6 +119,8 @@ resource "aws_security_group" "api_ecs_service_sg" {
   }
 }
 
+// psql -h pronto-postgres.cluster-ro-cpydu0kwrf24.us-east-1.rds.amazonaws.com -U master_user -d pronto
+
 resource "aws_security_group" "rds_allow_ecs_ingress" {
   name        = "rds_allow_ecs_ingress"
   description = "Security Group for allowing ECS traffic from port 4000"
@@ -142,6 +144,44 @@ resource "aws_security_group" "rds_allow_ecs_ingress" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "bastion_sg" {
+  name        = "bastion_sg"
+  description = "Security Group for bastion host"
+  vpc_id      = var.vpc_id
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${var.public_ip}/32"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "rds_allow_bastion_connectivity" {
+  name        = "rds_allow_bastion_connectivity"
+  description = "Security Group for allowing bastion host to connect to RDS"
+  vpc_id      = var.vpc_id
+  ingress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.bastion_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

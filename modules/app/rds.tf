@@ -14,7 +14,9 @@ resource "aws_rds_cluster" "pronto_rds_cluster" {
   master_password      = data.aws_secretsmanager_secret_version.rds_password.secret_string
   skip_final_snapshot  = true
 
-  vpc_security_group_ids = [aws_security_group.rds_allow_ecs_ingress.id]
+  vpc_security_group_ids = [
+    aws_security_group.rds_allow_ecs_ingress.id,
+  aws_security_group.rds_allow_bastion_connectivity.id]
 
   serverlessv2_scaling_configuration {
     max_capacity = 1.0
@@ -27,4 +29,23 @@ resource "aws_rds_cluster_instance" "pronto_db_instance" {
   instance_class     = "db.serverless"
   engine             = aws_rds_cluster.pronto_rds_cluster.engine
   engine_version     = aws_rds_cluster.pronto_rds_cluster.engine_version
+}
+
+// bastion to connect to rds
+resource "aws_instance" "rds_bastion" {
+  ami                         = "ami-0c101f26f147fa7fd"
+  instance_type               = "t2.micro"
+  key_name                    = "dev"
+  subnet_id                   = var.public_subnet_ids[0]
+  vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
+  associate_public_ip_address = true
+
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y postgresql-client",
+      "psql -h pronto-postgres.cluster-ro-cpydu0kwrf24.us-east-1.rds.amazonaws.com -U master_user -d pronto"
+    ]
+  }
 }

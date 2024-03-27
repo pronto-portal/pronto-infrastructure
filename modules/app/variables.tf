@@ -4,6 +4,7 @@ variable "allow_all_egress_id" {}
 variable "vpc_id" {}
 variable "db_secret_id" {}
 variable "db_secret_version_id" {}
+variable "public_ip" {}
 
 variable "api_env_vars" {}
 variable "reminder_env_vars" {}

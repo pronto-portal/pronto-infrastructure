@@ -70,6 +70,7 @@ module "app" {
   ecr_image_pull_policy_arn    = module.ecr.ecr_image_pull_policy_arn
   db_secret_id                 = module.secrets.db_secret_id
   db_secret_version_id         = module.secrets.db_secret_version_id
+  public_ip                    = var.public_ip
 }
 
 module "cicd" {

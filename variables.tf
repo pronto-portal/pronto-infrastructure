@@ -58,3 +58,6 @@ variable "TWILIO_PHONE" {
   nullable  = false
 }
 
+variable "public_ip" {
+  type = string
+}
