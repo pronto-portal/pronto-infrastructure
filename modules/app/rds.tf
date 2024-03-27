@@ -32,19 +32,19 @@ resource "aws_rds_cluster_instance" "pronto_db_instance" {
 }
 
 // bastion to connect to rds
-# resource "aws_instance" "rds_bastion" {
-#   ami                         = "ami-033a1ebf088e56e81"
-#   instance_type               = "t2.micro"
-#   key_name                    = "dev"
-#   subnet_id                   = var.public_subnet_ids[0]
-#   vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
-#   associate_public_ip_address = true
+resource "aws_instance" "rds_bastion" {
+  ami                         = "ami-033a1ebf088e56e81"
+  instance_type               = "t2.micro"
+  key_name                    = "dev"
+  subnet_id                   = var.public_subnet_ids[0]
+  vpc_security_group_ids      = [aws_security_group.bastion_sg.id]
+  associate_public_ip_address = true
 
 
-#   user_data = <<-EOF
-#               #!/bin/bash
-#               sudo yum install -y postgresql15.x86_64
-#               echo 'export PGPASSWORD="${data.aws_secretsmanager_secret_version.rds_password.secret_string}"' >> ~/.bashrc
-#               echo 'alias connectdb="psql -h pronto-postgres.cluster-ro-cpydu0kwrf24.us-east-1.rds.amazonaws.com -U master_user -d pronto"' >> ~/.bashrc
-#               EOF
-# }
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo yum install -y postgresql15.x86_64
+              echo 'export PGPASSWORD="${data.aws_secretsmanager_secret_version.rds_password.secret_string}"' >> ~/.bashrc
+              echo 'alias connectdb="psql -h pronto-postgres.cluster-ro-cpydu0kwrf24.us-east-1.rds.amazonaws.com -U master_user -d pronto"' >> ~/.bashrc
+              EOF
+}
