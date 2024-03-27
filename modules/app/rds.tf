@@ -44,7 +44,7 @@ resource "aws_instance" "rds_bastion" {
   user_data = <<-EOF
               #!/bin/bash
               sudo yum install -y postgresql15.x86_64
-              export PGPASSWORD=${data.aws_secretsmanager_secret_version.rds_password.secret_string}
-              alias connectdb="psql -h pronto-postgres.cluster-ro-cpydu0kwrf24.us-east-1.rds.amazonaws.com -U master_user -d pronto"
+              echo 'export PGPASSWORD="${data.aws_secretsmanager_secret_version.rds_password.secret_string}"' >> ~/.bashrc
+              echo 'alias connectdb="psql -h pronto-postgres.cluster-ro-cpydu0kwrf24.us-east-1.rds.amazonaws.com -U master_user -d pronto"' >> ~/.bashrc
               EOF
 }
